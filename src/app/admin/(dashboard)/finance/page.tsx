@@ -1,12 +1,12 @@
 "use client";
 
-import { getData } from "@/lib/db";
+import { getData, Data, Product } from "@/lib/db";
 import { DollarSign, ShoppingBag, TrendingUp, ArrowUpRight, ArrowDownRight, CreditCard, Calendar } from "lucide-react";
 import { useEffect, useState } from "react";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 
 export default function FinancePage() {
-    const [data, setData] = useState<any>(null);
+    const [data, setData] = useState<Data | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -120,7 +120,7 @@ export default function FinancePage() {
     // We need to look up product types from the product ID in the order items if not stored directly
     // But Order items have 'title'. We might need to map them back to products or just use 'title' if types aren't available easily.
     // However, data.products is available!
-    const productsMap = new Map((data.products || []).map((p: any) => [p.id, p]));
+    const productsMap = new Map<string, Product>((data.products || []).map((p: Product) => [p.id, p]));
 
     type CategoryCount = { [key: string]: number };
     const categoryCounts: CategoryCount = {};
