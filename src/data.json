@@ -1,0 +1,879 @@
+{
+  "profile": {
+    "name": "PEGASUS_MRX",
+    "handle": "@PEGASUS_MRX",
+    "type": "DIGITAL STORE",
+    "tagline": "Digital Store",
+    "avatar": "",
+    "socials": {
+      "telegram": "@PEGASUS_MRX",
+      "twitter": "",
+      "instagram": "",
+      "discord": "",
+      "youtube": "",
+      "website": ""
+    },
+    "payout": {
+      "network": "USDT (TRC-20)",
+      "address": ""
+    },
+    "telegramWidget": {
+      "enabled": true,
+      "username": "PEGASUS_MRX"
+    },
+    "productsCount": 3,
+    "salesCount": 150
+  },
+  "products": [
+    {
+      "id": "b4pwt0w",
+      "title": "RDP",
+      "price": "50",
+      "description": "wa titoz",
+      "oldPrice": "100",
+      "type": "Service",
+      "inStock": true,
+      "imageColor": "bg-gradient-to-br from-gray-800 to-black",
+      "image": "/uploads/693f7106-e99b-4e30-a4d0-9aa3d9342d14-rddp.png",
+      "images": [
+        "/uploads/7223c8ba-69c3-453f-8aea-9fd8949cd70f-XAUUSD_2026-02-04_16-52-11.png"
+      ],
+      "videos": [
+        "/uploads/8854d384-180b-440c-a777-759d0d2734c8-IMG_3601.MOV"
+      ],
+      "content": "",
+      "customFields": [
+        {
+          "label": "Twitter Id",
+          "required": true,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "xb952iu",
+      "title": "rrda",
+      "price": "25",
+      "description": "",
+      "oldPrice": "400",
+      "type": "Service",
+      "inStock": true,
+      "imageColor": "bg-gradient-to-br from-gray-800 to-black",
+      "image": "",
+      "images": [],
+      "videos": [],
+      "content": "",
+      "customFields": [
+        {
+          "label": "Telegram id",
+          "required": true,
+          "type": "text"
+        }
+      ]
+    },
+    {
+      "id": "drxukxw",
+      "title": "chi 9alwa w sf",
+      "price": "22",
+      "description": "",
+      "oldPrice": "2222",
+      "type": "Service",
+      "inStock": true,
+      "imageColor": "bg-gradient-to-br from-gray-800 to-black",
+      "image": "/uploads/c3c73d74-ecaf-41d5-aa11-ae32c582eece-rddp.png",
+      "images": [],
+      "videos": [
+        "/uploads/09e39cd8-6271-4a4e-b83f-5494a8b93789-IMG_3601.MOV"
+      ],
+      "content": "",
+      "customFields": [
+        {
+          "label": "Telegram id",
+          "required": true,
+          "type": "text"
+        }
+      ]
+    }
+  ],
+  "categories": [],
+  "orders": [],
+  "tickets": [],
+  "visits": [
+    {
+      "id": "z5pefo",
+      "path": "/",
+      "date": "2026-02-13T01:11:43.973Z",
+      "ip": "::1"
+    },
+    {
+      "id": "8u8sco",
+      "path": "/",
+      "date": "2026-02-13T01:18:54.427Z",
+      "ip": "::1"
+    },
+    {
+      "id": "yium4",
+      "path": "/cart",
+      "date": "2026-02-13T01:19:35.813Z",
+      "ip": "::1"
+    },
+    {
+      "id": "paewtl",
+      "path": "/",
+      "date": "2026-02-13T01:19:50.713Z",
+      "ip": "::1"
+    },
+    {
+      "id": "ktlpd6",
+      "path": "/",
+      "date": "2026-02-13T01:19:54.015Z",
+      "ip": "::1"
+    },
+    {
+      "id": "70hzzi",
+      "path": "/",
+      "date": "2026-02-13T01:26:05.537Z",
+      "ip": "::1"
+    },
+    {
+      "id": "1r7jzb",
+      "path": "/",
+      "date": "2026-02-13T01:28:20.867Z",
+      "ip": "::1"
+    },
+    {
+      "id": "m73n8",
+      "path": "/",
+      "date": "2026-02-13T02:13:26.036Z",
+      "ip": "::1"
+    },
+    {
+      "id": "in86za",
+      "path": "/product/b4pwt0w",
+      "date": "2026-02-13T02:13:27.772Z",
+      "ip": "::1"
+    },
+    {
+      "id": "kp9be9",
+      "path": "/product/b4pwt0w",
+      "date": "2026-02-13T02:14:07.075Z",
+      "ip": "::1"
+    },
+    {
+      "id": "3jcmqn",
+      "path": "/product/b4pwt0w",
+      "date": "2026-02-13T02:15:30.187Z",
+      "ip": "::1"
+    },
+    {
+      "id": "jns4vk",
+      "path": "/product/b4pwt0w",
+      "date": "2026-02-13T02:20:11.292Z",
+      "ip": "::1"
+    },
+    {
+      "id": "8egxd7",
+      "path": "/product/b4pwt0w",
+      "date": "2026-02-13T02:20:30.745Z",
+      "ip": "::1"
+    },
+    {
+      "id": "rdrta7",
+      "path": "/",
+      "date": "2026-02-13T02:22:16.507Z",
+      "ip": "::1"
+    },
+    {
+      "id": "uqlxlp",
+      "path": "/",
+      "date": "2026-02-13T02:22:18.695Z",
+      "ip": "::1"
+    },
+    {
+      "id": "fjctd9",
+      "path": "/product/b4pwt0w",
+      "date": "2026-02-13T02:22:23.925Z",
+      "ip": "::1"
+    },
+    {
+      "id": "wh00zf",
+      "path": "/product/b4pwt0w",
+      "date": "2026-02-13T02:25:26.281Z",
+      "ip": "::1"
+    },
+    {
+      "id": "a801fa",
+      "path": "/",
+      "date": "2026-02-13T02:26:04.804Z",
+      "ip": "::1"
+    },
+    {
+      "id": "aj2cdj",
+      "path": "/product/b4pwt0w",
+      "date": "2026-02-13T02:28:02.133Z",
+      "ip": "::1"
+    },
+    {
+      "id": "v05m0x",
+      "path": "/",
+      "date": "2026-02-13T02:28:27.175Z",
+      "ip": "::1"
+    },
+    {
+      "id": "fs3mqk",
+      "path": "/",
+      "date": "2026-02-13T02:28:35.178Z",
+      "ip": "::1"
+    },
+    {
+      "id": "tcdtq",
+      "path": "/",
+      "date": "2026-02-13T02:34:04.330Z",
+      "ip": "::1"
+    },
+    {
+      "id": "9lu9qq",
+      "path": "/",
+      "date": "2026-02-13T02:34:23.939Z",
+      "ip": "::1"
+    },
+    {
+      "id": "wht71b",
+      "path": "/product/b4pwt0w",
+      "date": "2026-02-13T02:34:26.245Z",
+      "ip": "::1"
+    },
+    {
+      "id": "j34yc",
+      "path": "/product/b4pwt0w",
+      "date": "2026-02-13T02:34:51.924Z",
+      "ip": "::1"
+    },
+    {
+      "id": "tlyhwp",
+      "path": "/",
+      "date": "2026-02-13T02:35:01.573Z",
+      "ip": "::1"
+    },
+    {
+      "id": "ljx67b",
+      "path": "/product/b4pwt0w",
+      "date": "2026-02-13T02:35:05.908Z",
+      "ip": "::1"
+    },
+    {
+      "id": "1nnvy",
+      "path": "/cart",
+      "date": "2026-02-13T02:35:20.066Z",
+      "ip": "::1"
+    },
+    {
+      "id": "56d1s",
+      "path": "/product/b4pwt0w",
+      "date": "2026-02-13T02:35:39.368Z",
+      "ip": "::1"
+    },
+    {
+      "id": "5r3eui",
+      "path": "/product/b4pwt0w",
+      "date": "2026-02-13T02:43:11.958Z",
+      "ip": "::1"
+    },
+    {
+      "id": "gd6ymn",
+      "path": "/",
+      "date": "2026-02-13T02:43:13.547Z",
+      "ip": "::1"
+    },
+    {
+      "id": "rnbo74",
+      "path": "/",
+      "date": "2026-02-13T02:43:18.976Z",
+      "ip": "::1"
+    },
+    {
+      "id": "er7ajj",
+      "path": "/",
+      "date": "2026-02-13T02:45:04.833Z",
+      "ip": "::1"
+    },
+    {
+      "id": "tpdw2q",
+      "path": "/",
+      "date": "2026-02-13T02:46:03.244Z",
+      "ip": "::1"
+    },
+    {
+      "id": "hwu0mo",
+      "path": "/",
+      "date": "2026-02-13T02:47:50.288Z",
+      "ip": "::1"
+    },
+    {
+      "id": "pvd09m",
+      "path": "/",
+      "date": "2026-02-13T02:50:06.014Z",
+      "ip": "::1"
+    },
+    {
+      "id": "dd5uum",
+      "path": "/product/b4pwt0w",
+      "date": "2026-02-13T02:52:44.620Z",
+      "ip": "::1"
+    },
+    {
+      "id": "uivic",
+      "path": "/",
+      "date": "2026-02-13T02:52:57.693Z",
+      "ip": "::1"
+    },
+    {
+      "id": "eeje7d",
+      "path": "/product/b4pwt0w",
+      "date": "2026-02-13T02:53:12.456Z",
+      "ip": "::1"
+    },
+    {
+      "id": "a56la",
+      "path": "/",
+      "date": "2026-02-13T02:53:54.415Z",
+      "ip": "::1"
+    },
+    {
+      "id": "jwjt2w",
+      "path": "/",
+      "date": "2026-02-13T02:56:25.949Z",
+      "ip": "::1"
+    },
+    {
+      "id": "ahpx7i",
+      "path": "/product/b4pwt0w",
+      "date": "2026-02-13T02:56:30.491Z",
+      "ip": "::1"
+    },
+    {
+      "id": "ohe75",
+      "path": "/",
+      "date": "2026-02-13T02:57:16.496Z",
+      "ip": "::1"
+    },
+    {
+      "id": "kqx0vs",
+      "path": "/product/xb952iu",
+      "date": "2026-02-13T02:58:02.465Z",
+      "ip": "::1"
+    },
+    {
+      "id": "5n1oq",
+      "path": "/",
+      "date": "2026-02-13T02:58:04.678Z",
+      "ip": "::1"
+    },
+    {
+      "id": "kvo2ur",
+      "path": "/product/b4pwt0w",
+      "date": "2026-02-13T02:58:06.659Z",
+      "ip": "::1"
+    },
+    {
+      "id": "l01q9i",
+      "path": "/",
+      "date": "2026-02-13T02:58:09.800Z",
+      "ip": "::1"
+    },
+    {
+      "id": "w3ht5g",
+      "path": "/",
+      "date": "2026-02-13T02:59:15.497Z",
+      "ip": "::1"
+    },
+    {
+      "id": "ngwpaq",
+      "path": "/",
+      "date": "2026-02-13T02:59:17.279Z",
+      "ip": "::1"
+    },
+    {
+      "id": "aefjrq",
+      "path": "/reviews",
+      "date": "2026-02-13T02:59:28.633Z",
+      "ip": "::1"
+    },
+    {
+      "id": "7inc1",
+      "path": "/reviews",
+      "date": "2026-02-13T02:59:44.425Z",
+      "ip": "::1"
+    },
+    {
+      "id": "cwaic9",
+      "path": "/",
+      "date": "2026-02-13T02:59:45.918Z",
+      "ip": "::1"
+    },
+    {
+      "id": "p1ont",
+      "path": "/",
+      "date": "2026-02-13T03:00:34.832Z",
+      "ip": "::1"
+    },
+    {
+      "id": "jpc8tf",
+      "path": "/product/b4pwt0w",
+      "date": "2026-02-13T03:00:36.653Z",
+      "ip": "::1"
+    },
+    {
+      "id": "0idz6j",
+      "path": "/",
+      "date": "2026-02-13T03:00:38.644Z",
+      "ip": "::1"
+    },
+    {
+      "id": "6rlep",
+      "path": "/reviews",
+      "date": "2026-02-13T03:00:39.781Z",
+      "ip": "::1"
+    },
+    {
+      "id": "mhbcce",
+      "path": "/cart",
+      "date": "2026-02-13T03:01:08.929Z",
+      "ip": "::1"
+    },
+    {
+      "id": "yeq23",
+      "path": "/cart",
+      "date": "2026-02-13T03:01:24.751Z",
+      "ip": "::1"
+    },
+    {
+      "id": "otb7",
+      "path": "/product/b4pwt0w",
+      "date": "2026-02-13T03:01:54.219Z",
+      "ip": "::1"
+    },
+    {
+      "id": "4y9q3l",
+      "path": "/",
+      "date": "2026-02-13T03:02:03.969Z",
+      "ip": "::1"
+    },
+    {
+      "id": "y5wen",
+      "path": "/",
+      "date": "2026-02-13T03:11:17.273Z",
+      "ip": "::1"
+    },
+    {
+      "id": "etd0gq",
+      "path": "/",
+      "date": "2026-02-13T03:12:21.556Z",
+      "ip": "::1"
+    },
+    {
+      "id": "hccib",
+      "path": "/",
+      "date": "2026-02-13T03:14:04.344Z",
+      "ip": "::1"
+    },
+    {
+      "id": "83nloh",
+      "path": "/cart",
+      "date": "2026-02-13T03:14:06.611Z",
+      "ip": "::1"
+    },
+    {
+      "id": "w8kqmq",
+      "path": "/cart",
+      "date": "2026-02-13T03:17:21.594Z",
+      "ip": "::1"
+    },
+    {
+      "id": "hhha21",
+      "path": "/cart",
+      "date": "2026-02-13T03:18:36.480Z",
+      "ip": "::1"
+    },
+    {
+      "id": "56cky",
+      "path": "/",
+      "date": "2026-02-13T03:18:37.953Z",
+      "ip": "::1"
+    },
+    {
+      "id": "uibv1",
+      "path": "/",
+      "date": "2026-02-13T03:18:40.830Z",
+      "ip": "::1"
+    },
+    {
+      "id": "17013n",
+      "path": "/cart",
+      "date": "2026-02-13T03:18:43.514Z",
+      "ip": "::1"
+    },
+    {
+      "id": "0p6pxe",
+      "path": "/",
+      "date": "2026-02-13T03:18:49.722Z",
+      "ip": "::1"
+    },
+    {
+      "id": "isjfdi",
+      "path": "/",
+      "date": "2026-02-13T03:19:58.884Z",
+      "ip": "::1"
+    },
+    {
+      "id": "j80k2f",
+      "path": "/cart",
+      "date": "2026-02-13T03:20:13.941Z",
+      "ip": "::1"
+    },
+    {
+      "id": "y08hi",
+      "path": "/cart",
+      "date": "2026-02-13T03:20:24.281Z",
+      "ip": "::1"
+    },
+    {
+      "id": "08d7q",
+      "path": "/product/drxukxw",
+      "date": "2026-02-13T03:20:28.935Z",
+      "ip": "::1"
+    },
+    {
+      "id": "ovvfw",
+      "path": "/cart",
+      "date": "2026-02-13T03:20:51.332Z",
+      "ip": "::1"
+    },
+    {
+      "id": "1gnx6",
+      "path": "/",
+      "date": "2026-02-13T03:20:54.431Z",
+      "ip": "::1"
+    },
+    {
+      "id": "12v88n",
+      "path": "/",
+      "date": "2026-02-13T03:24:36.470Z",
+      "ip": "::1"
+    },
+    {
+      "id": "aa5t79",
+      "path": "/product/drxukxw",
+      "date": "2026-02-13T03:24:38.434Z",
+      "ip": "::1"
+    },
+    {
+      "id": "6ntfrb",
+      "path": "/cart",
+      "date": "2026-02-13T03:24:40.667Z",
+      "ip": "::1"
+    },
+    {
+      "id": "gs4eo",
+      "path": "/cart",
+      "date": "2026-02-13T03:25:24.189Z",
+      "ip": "::1"
+    },
+    {
+      "id": "z3ygg8",
+      "path": "/cart",
+      "date": "2026-02-13T03:26:48.279Z",
+      "ip": "::1"
+    },
+    {
+      "id": "hn3s97",
+      "path": "/cart",
+      "date": "2026-02-13T03:26:55.074Z",
+      "ip": "::1"
+    },
+    {
+      "id": "6mab6e",
+      "path": "/cart",
+      "date": "2026-02-13T03:27:07.183Z",
+      "ip": "::1"
+    },
+    {
+      "id": "4kvdyv",
+      "path": "/",
+      "date": "2026-02-13T03:27:09.017Z",
+      "ip": "::1"
+    },
+    {
+      "id": "aux3b",
+      "path": "/",
+      "date": "2026-02-13T03:27:11.309Z",
+      "ip": "::1"
+    },
+    {
+      "id": "4e0g4y",
+      "path": "/",
+      "date": "2026-02-13T03:27:55.815Z",
+      "ip": "::1"
+    },
+    {
+      "id": "4tjgn",
+      "path": "/cart",
+      "date": "2026-02-13T03:27:58.112Z",
+      "ip": "::1"
+    },
+    {
+      "id": "ir6mvd",
+      "path": "/",
+      "date": "2026-02-13T03:28:00.308Z",
+      "ip": "::1"
+    },
+    {
+      "id": "85eeff",
+      "path": "/cart",
+      "date": "2026-02-13T03:28:01.992Z",
+      "ip": "::1"
+    },
+    {
+      "id": "d6ff3h",
+      "path": "/",
+      "date": "2026-02-13T03:28:40.499Z",
+      "ip": "::1"
+    },
+    {
+      "id": "aklqmw",
+      "path": "/cart",
+      "date": "2026-02-13T03:28:42.570Z",
+      "ip": "::1"
+    },
+    {
+      "id": "yfzjl",
+      "path": "/",
+      "date": "2026-02-13T03:28:43.636Z",
+      "ip": "::1"
+    },
+    {
+      "id": "c8obxo",
+      "path": "/cart",
+      "date": "2026-02-13T03:28:45.539Z",
+      "ip": "::1"
+    },
+    {
+      "id": "ai34ji",
+      "path": "/cart",
+      "date": "2026-02-13T03:29:09.711Z",
+      "ip": "::1"
+    },
+    {
+      "id": "l2plv6",
+      "path": "/",
+      "date": "2026-02-13T03:31:16.602Z",
+      "ip": "::1"
+    },
+    {
+      "id": "bmhxee",
+      "path": "/",
+      "date": "2026-02-13T03:31:20.560Z",
+      "ip": "::1"
+    },
+    {
+      "id": "vocmwq",
+      "path": "/",
+      "date": "2026-02-13T03:31:30.057Z",
+      "ip": "::1"
+    },
+    {
+      "id": "wnydd",
+      "path": "/",
+      "date": "2026-02-13T03:32:22.562Z",
+      "ip": "::1"
+    },
+    {
+      "id": "s3pmyn",
+      "path": "/cart",
+      "date": "2026-02-13T03:32:25.102Z",
+      "ip": "::1"
+    },
+    {
+      "id": "y89zkg",
+      "path": "/cart",
+      "date": "2026-02-13T03:32:29.673Z",
+      "ip": "::1"
+    },
+    {
+      "id": "03tje",
+      "path": "/",
+      "date": "2026-02-13T03:32:30.916Z",
+      "ip": "::1"
+    },
+    {
+      "id": "ct3x7p",
+      "path": "/cart",
+      "date": "2026-02-13T03:32:33.321Z",
+      "ip": "::1"
+    },
+    {
+      "id": "md3efj",
+      "path": "/",
+      "date": "2026-02-13T03:33:12.461Z",
+      "ip": "::1"
+    },
+    {
+      "id": "vvvbsc",
+      "path": "/",
+      "date": "2026-02-13T03:36:22.920Z",
+      "ip": "::1"
+    },
+    {
+      "id": "7znkj",
+      "path": "/",
+      "date": "2026-02-13T03:37:03.632Z",
+      "ip": "::1"
+    },
+    {
+      "id": "ihzi4m",
+      "path": "/cart",
+      "date": "2026-02-13T03:38:05.126Z",
+      "ip": "::1"
+    },
+    {
+      "id": "zfxbqs",
+      "path": "/cart",
+      "date": "2026-02-13T03:38:19.167Z",
+      "ip": "::1"
+    },
+    {
+      "id": "ixswnd",
+      "path": "/cart",
+      "date": "2026-02-13T03:39:21.688Z",
+      "ip": "::1"
+    },
+    {
+      "id": "4ydbiy",
+      "path": "/cart",
+      "date": "2026-02-13T03:39:22.636Z",
+      "ip": "::1"
+    },
+    {
+      "id": "va85tw",
+      "path": "/",
+      "date": "2026-02-13T03:39:23.880Z",
+      "ip": "::1"
+    },
+    {
+      "id": "k4hs1",
+      "path": "/",
+      "date": "2026-02-13T03:42:09.774Z",
+      "ip": "::1"
+    },
+    {
+      "id": "lz1sj",
+      "path": "/",
+      "date": "2026-02-13T03:42:13.642Z",
+      "ip": "::1"
+    },
+    {
+      "id": "k74pa",
+      "path": "/",
+      "date": "2026-02-13T03:43:11.798Z",
+      "ip": "::1"
+    },
+    {
+      "id": "1k7zg",
+      "path": "/reviews",
+      "date": "2026-02-13T03:43:43.758Z",
+      "ip": "::1"
+    },
+    {
+      "id": "an04pe",
+      "path": "/cart",
+      "date": "2026-02-13T03:47:19.706Z",
+      "ip": "::1"
+    },
+    {
+      "id": "r18qa",
+      "path": "/",
+      "date": "2026-02-13T03:47:20.735Z",
+      "ip": "::1"
+    },
+    {
+      "id": "75pyvc",
+      "path": "/reviews",
+      "date": "2026-02-13T03:47:21.770Z",
+      "ip": "::1"
+    },
+    {
+      "id": "vfriua",
+      "path": "/",
+      "date": "2026-02-13T03:47:32.104Z",
+      "ip": "::1"
+    },
+    {
+      "id": "50p6e",
+      "path": "/",
+      "date": "2026-02-13T15:40:46.734Z",
+      "ip": "::1"
+    },
+    {
+      "id": "bibqrl",
+      "path": "/",
+      "date": "2026-02-13T15:41:43.717Z",
+      "ip": "::1"
+    },
+    {
+      "id": "oppa8c",
+      "path": "/",
+      "date": "2026-02-13T22:19:33.820Z",
+      "ip": "::1"
+    },
+    {
+      "id": "syk12",
+      "path": "/product/b4pwt0w",
+      "date": "2026-02-13T22:19:42.246Z",
+      "ip": "::1"
+    },
+    {
+      "id": "pvp9lu",
+      "path": "/",
+      "date": "2026-02-13T22:19:45.057Z",
+      "ip": "::1"
+    },
+    {
+      "id": "fvlt9",
+      "path": "/",
+      "date": "2026-02-13T22:19:49.852Z",
+      "ip": "::1"
+    },
+    {
+      "id": "8d1vkn",
+      "path": "/",
+      "date": "2026-02-13T22:20:24.110Z",
+      "ip": "::1"
+    },
+    {
+      "id": "vweo5f",
+      "path": "/reviews",
+      "date": "2026-02-13T22:20:47.277Z",
+      "ip": "::1"
+    }
+  ],
+  "reviews": [
+    {
+      "id": "d6877955-3796-4b74-b3bf-d1ed5e68f638",
+      "productId": "xb952iu",
+      "productName": "rrda",
+      "userName": "hjmhh",
+      "rating": 5,
+      "comment": "fdhdhfb",
+      "date": "2025-02-12T20:56"
+    },
+    {
+      "id": "b9ff0ebd-a417-49c4-8b0c-e9a3f859e09a",
+      "productId": "b4pwt0w",
+      "productName": "RDP",
+      "userName": "fhd",
+      "rating": 5,
+      "comment": "sfdfvd",
+      "date": "2026-01-01T00:00"
+    }
+  ]
+}

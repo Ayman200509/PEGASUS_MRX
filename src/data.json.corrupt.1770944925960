@@ -1,0 +1,115 @@
+{
+  "profile": {
+    "name": "PEGASUS_MRX",
+    "handle": "@PEGASUS_MRX",
+    "type": "DIGITAL STORE",
+    "tagline": "Digital Store",
+    "avatar": "",
+    "socials": {
+      "telegram": "@PEGASUS_MRX",
+      "twitter": "",
+      "instagram": "",
+      "discord": "",
+      "youtube": "",
+      "website": ""
+    },
+    "payout": {
+      "network": "USDT (TRC-20)",
+      "address": ""
+    },
+    "telegramWidget": {
+      "enabled": true,
+      "username": "PEGASUS_MRX"
+    },
+    "productsCount": 1,
+    "salesCount": 1
+  },
+  "products": [
+    {
+      "id": "b4pwt0w",
+      "title": "smi9li",
+      "price": "5",
+      "description": "wa titoz",
+      "oldPrice": "100",
+      "type": "Service",
+      "inStock": true,
+      "imageColor": "bg-gradient-to-br from-gray-800 to-black",
+      "image": "",
+      "images": [],
+      "videos": []
+    }
+  ],
+  "categories": [],
+  "orders": [
+    {
+      "id": "ORD-DWHQBRZ",
+      "customerEmail": "bhnayman@gmail.com",
+      "customerTelegram": "aliayman",
+      "items": [
+        {
+          "productId": "b4pwt0w",
+          "title": "smi9li",
+          "price": "5",
+          "quantity": 1
+        }
+      ],
+      "total": "5.00",
+      "status": "Pending Payment",
+      "date": "2026-02-13T01:07:53.466Z",
+      "ip": "::1",
+      "country": "Unknown"
+    }
+  ],
+  "tickets": [],
+  "visits": [
+    {
+      "id": "cxt84",
+      "path": "/",
+      "date": "2026-02-13T01:06:15.777Z",
+      "ip": "::1"
+    },
+    {
+      "id": "de3xz4",
+      "path": "/",
+      "date": "2026-02-13T01:06:22.060Z",
+      "ip": "::1"
+    },
+    {
+      "id": "zdz0j8",
+      "path": "/",
+      "date": "2026-02-13T01:06:59.644Z",
+      "ip": "::1"
+    },
+    {
+      "id": "k997z",
+      "path": "/cart",
+      "date": "2026-02-13T01:07:05.486Z",
+      "ip": "::1"
+    },
+    {
+      "id": "tumn4a",
+      "path": "/",
+      "date": "2026-02-13T01:07:06.525Z",
+      "ip": "::1"
+    },
+    {
+      "id": "86nt",
+      "path": "/",
+      "date": "2026-02-13T01:07:41.538Z",
+      "ip": "::1"
+    },
+    {
+      "id": "ofk8uf",
+      "path": "/cart",
+      "date": "2026-02-13T01:07:44.699Z",
+      "ip": "::1"
+    }
+  ]
+}{
+      "id": "wqt6y",
+      "path": "/",
+      "date": "2026-02-13T01:08:15.751Z",
+      "ip": "::1"
+    }
+  ]
+}

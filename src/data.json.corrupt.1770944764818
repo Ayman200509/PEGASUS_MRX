@@ -1,0 +1,478 @@
+{
+  "profile": {
+    "name": "PEGASUS_MRX",
+    "handle": "@PEGASUS_MRX",
+    "type": "DIGITAL STORE",
+    "tagline": "Digital Store",
+    "avatar": "",
+    "socials": {
+      "telegram": "@PEGASUS_MRX",
+      "twitter": "",
+      "instagram": "",
+      "discord": "",
+      "youtube": "",
+      "website": ""
+    },
+    "payout": {
+      "network": "USDT (TRC-20)",
+      "address": ""
+    },
+    "productsCount": 2,
+    "salesCount": 8,
+    "telegramWidget": {
+      "username": "PEGASUS_MRX",
+      "enabled": true
+    }
+  },
+  "products": [
+    {
+      "id": "wg2an6p",
+      "title": "sdvd",
+      "price": "22",
+      "description": "rdgvdv",
+      "oldPrice": "2222",
+      "type": "Service",
+      "inStock": true,
+      "imageColor": "bg-gradient-to-br from-gray-800 to-black",
+      "image": "",
+      "images": [],
+      "videos": []
+    },
+    {
+      "id": "tr028r8",
+      "title": "sender",
+      "price": "10",
+      "description": "nadi\n",
+      "oldPrice": "11",
+      "type": "Service",
+      "inStock": true,
+      "imageColor": "bg-gradient-to-br from-gray-800 to-black",
+      "image": "",
+      "images": [],
+      "videos": []
+    }
+  ],
+  "categories": [],
+  "orders": [
+    {
+      "id": "ORD-906QSUH",
+      "customerEmail": "bhnsvayman@gmail.com",
+      "customerTelegram": "dbv fb",
+      "items": [
+        {
+          "productId": "tr028r8",
+          "title": "sender",
+          "price": "10",
+          "quantity": 1
+        }
+      ],
+      "total": "10.00",
+      "status": "Pending Payment",
+      "date": "2026-02-13T00:56:32.202Z",
+      "ip": "::1",
+      "country": "Unknown"
+    },
+    {
+      "id": "ORD-PEEB4KK",
+      "customerEmail": "bhnayman@gmail.com",
+      "customerTelegram": "@ALI_AYMAN_MRY",
+      "items": [
+        {
+          "productId": "tr028r8",
+          "title": "sender",
+          "price": "10",
+          "quantity": 1
+        }
+      ],
+      "total": "10.00",
+      "status": "Pending Payment",
+      "date": "2026-02-13T00:42:36.509Z"
+    },
+    {
+      "id": "ORD-7VFRWNA",
+      "customerEmail": "bhnayman@gmail.com",
+      "customerTelegram": "@ahscs",
+      "items": [
+        {
+          "productId": "tr028r8",
+          "title": "sender",
+          "price": "10",
+          "quantity": 1
+        }
+      ],
+      "total": "10.00",
+      "status": "Pending Payment",
+      "date": "2026-02-13T00:36:22.593Z"
+    },
+    {
+      "id": "ORD-4Z6O50K",
+      "customerEmail": "elsabdo8@gmail.com",
+      "customerTelegram": "@PEGASUS_MRX",
+      "items": [
+        {
+          "productId": "tr028r8",
+          "title": "sender",
+          "price": "10",
+          "quantity": 1
+        }
+      ],
+      "total": "10.00",
+      "status": "Pending Payment",
+      "date": "2026-02-13T00:28:57.376Z"
+    },
+    {
+      "id": "ORD-610YIIG",
+      "customerEmail": "bhnayman@gmail.com",
+      "customerTelegram": "cbchc",
+      "items": [
+        {
+          "productId": "tr028r8",
+          "title": "sender",
+          "price": "10",
+          "quantity": 1
+        }
+      ],
+      "total": "10.00",
+      "status": "Pending Payment",
+      "date": "2026-02-13T00:27:37.290Z"
+    },
+    {
+      "id": "ORD-O14SCA8",
+      "customerEmail": "bhnayman@gmail.com",
+      "customerTelegram": "gbnhnghn",
+      "items": [
+        {
+          "productId": "tr028r8",
+          "title": "sender",
+          "price": "10",
+          "quantity": 1
+        }
+      ],
+      "total": "10.00",
+      "status": "Pending Payment",
+      "date": "2026-02-13T00:19:17.713Z"
+    },
+    {
+      "id": "ORD-TXAHFPX",
+      "customerEmail": "vdvd@gmail.com",
+      "customerTelegram": "sdvarbg",
+      "items": [
+        {
+          "productId": "wg2an6p",
+          "title": "sdvd",
+          "price": "22",
+          "quantity": 1
+        }
+      ],
+      "total": "22.00",
+      "status": "Pending Payment",
+      "date": "2026-02-13T00:17:58.219Z"
+    },
+    {
+      "id": "ORD-XFQSS1N",
+      "customerEmail": "bhnayman@gmail.com",
+      "customerTelegram": "db",
+      "items": [
+        {
+          "productId": "wg2an6p",
+          "title": "sdvd",
+          "price": "22",
+          "quantity": 1
+        }
+      ],
+      "total": "22.00",
+      "status": "Pending Payment",
+      "date": "2026-02-13T00:17:27.892Z"
+    }
+  ],
+  "tickets": [],
+  "visits": [
+    {
+      "id": "tjb4bq",
+      "path": "/",
+      "date": "2026-02-13T00:15:54.706Z",
+      "ip": "::1"
+    },
+    {
+      "id": "kihasg",
+      "path": "/",
+      "date": "2026-02-13T00:16:45.441Z",
+      "ip": "::1"
+    },
+    {
+      "id": "9ezq8u",
+      "path": "/cart",
+      "date": "2026-02-13T00:16:49.052Z",
+      "ip": "::1"
+    },
+    {
+      "id": "8jq98",
+      "path": "/",
+      "date": "2026-02-13T00:16:50.069Z",
+      "ip": "::1"
+    },
+    {
+      "id": "ikltro",
+      "path": "/",
+      "date": "2026-02-13T00:17:15.882Z",
+      "ip": "::1"
+    },
+    {
+      "id": "dhaar",
+      "path": "/product/wg2an6p",
+      "date": "2026-02-13T00:17:17.730Z",
+      "ip": "::1"
+    },
+    {
+      "id": "y4g5r",
+      "path": "/cart",
+      "date": "2026-02-13T00:17:18.623Z",
+      "ip": "::1"
+    },
+    {
+      "id": "esrer",
+      "path": "/",
+      "date": "2026-02-13T00:17:20.588Z",
+      "ip": "::1"
+    },
+    {
+      "id": "tmu7ea",
+      "path": "/product/wg2an6p",
+      "date": "2026-02-13T00:17:22.598Z",
+      "ip": "::1"
+    },
+    {
+      "id": "vrxynu",
+      "path": "/cart",
+      "date": "2026-02-13T00:17:23.734Z",
+      "ip": "::1"
+    },
+    {
+      "id": "vvaocv",
+      "path": "/",
+      "date": "2026-02-13T00:17:37.575Z",
+      "ip": "::1"
+    },
+    {
+      "id": "p2n5ah",
+      "path": "/",
+      "date": "2026-02-13T00:17:40.632Z",
+      "ip": "::1"
+    },
+    {
+      "id": "z4acye",
+      "path": "/cart",
+      "date": "2026-02-13T00:17:51.415Z",
+      "ip": "::1"
+    },
+    {
+      "id": "4sqd36",
+      "path": "/",
+      "date": "2026-02-13T00:18:04.121Z",
+      "ip": "::1"
+    },
+    {
+      "id": "ee4muh",
+      "path": "/",
+      "date": "2026-02-13T00:18:07.205Z",
+      "ip": "::1"
+    },
+    {
+      "id": "ljryzf",
+      "path": "/",
+      "date": "2026-02-13T00:18:40.725Z",
+      "ip": "::1"
+    },
+    {
+      "id": "2eihjgj",
+      "path": "/",
+      "date": "2026-02-13T00:19:04.830Z",
+      "ip": "::1"
+    },
+    {
+      "id": "5ags83",
+      "path": "/product/tr028r8",
+      "date": "2026-02-13T00:19:09.541Z",
+      "ip": "::1"
+    },
+    {
+      "id": "2nc30r",
+      "path": "/cart",
+      "date": "2026-02-13T00:19:10.773Z",
+      "ip": "::1"
+    },
+    {
+      "id": "vgvhm8",
+      "path": "/cart",
+      "date": "2026-02-13T00:19:29.589Z",
+      "ip": "::1"
+    },
+    {
+      "id": "4sjlcc",
+      "path": "/",
+      "date": "2026-02-13T00:19:34.110Z",
+      "ip": "::1"
+    },
+    {
+      "id": "lj7g2t",
+      "path": "/",
+      "date": "2026-02-13T00:24:54.472Z",
+      "ip": "::1"
+    },
+    {
+      "id": "qdcs3",
+      "path": "/",
+      "date": "2026-02-13T00:25:57.533Z",
+      "ip": "::1"
+    },
+    {
+      "id": "iu6tfh",
+      "path": "/product/tr028r8",
+      "date": "2026-02-13T00:26:54.873Z",
+      "ip": "::1"
+    },
+    {
+      "id": "91iurh",
+      "path": "/",
+      "date": "2026-02-13T00:26:56.991Z",
+      "ip": "::1"
+    },
+    {
+      "id": "zyxoy",
+      "path": "/cart",
+      "date": "2026-02-13T00:27:20.860Z",
+      "ip": "::1"
+    },
+    {
+      "id": "2kj2za",
+      "path": "/cart",
+      "date": "2026-02-13T00:28:10.577Z",
+      "ip": "::1"
+    },
+    {
+      "id": "szh6r",
+      "path": "/",
+      "date": "2026-02-13T00:28:27.576Z",
+      "ip": "::1"
+    },
+    {
+      "id": "6c6ok8",
+      "path": "/cart",
+      "date": "2026-02-13T00:28:32.928Z",
+      "ip": "::1"
+    },
+    {
+      "id": "cqyn7",
+      "path": "/cart",
+      "date": "2026-02-13T00:29:55.685Z",
+      "ip": "::1"
+    },
+    {
+      "id": "2ownqph",
+      "path": "/",
+      "date": "2026-02-13T00:32:34.632Z",
+      "ip": "::1"
+    },
+    {
+      "id": "0igqlj",
+      "path": "/",
+      "date": "2026-02-13T00:33:00.158Z",
+      "ip": "::1"
+    },
+    {
+      "id": "dedpi",
+      "path": "/",
+      "date": "2026-02-13T00:33:06.535Z",
+      "ip": "::1"
+    },
+    {
+      "id": "igods5",
+      "path": "/",
+      "date": "2026-02-13T00:34:24.804Z",
+      "ip": "::1"
+    },
+    {
+      "id": "mj1s7n",
+      "path": "/",
+      "date": "2026-02-13T00:35:43.697Z",
+      "ip": "::1"
+    },
+    {
+      "id": "ha8va5p",
+      "path": "/",
+      "date": "2026-02-13T00:35:55.378Z",
+      "ip": "::1"
+    },
+    {
+      "id": "ie229k",
+      "path": "/",
+      "date": "2026-02-13T00:36:09.093Z",
+      "ip": "::1"
+    },
+    {
+      "id": "ncjcn",
+      "path": "/cart",
+      "date": "2026-02-13T00:36:11.482Z",
+      "ip": "::1"
+    },
+    {
+      "id": "rjog2",
+      "path": "/cart",
+      "date": "2026-02-13T00:40:14.460Z",
+      "ip": "::1"
+    },
+    {
+      "id": "2gvwa9",
+      "path": "/",
+      "date": "2026-02-13T00:40:15.117Z",
+      "ip": "::1"
+    },
+    {
+      "id": "mxavw",
+      "path": "/",
+      "date": "2026-02-13T00:40:18.708Z",
+      "ip": "::1"
+    },
+    {
+      "id": "my5der",
+      "path": "/",
+      "date": "2026-02-13T00:40:22.703Z",
+      "ip": "::1"
+    },
+    {
+      "id": "oqej42j",
+      "path": "/cart",
+      "date": "2026-02-13T00:42:22.041Z",
+      "ip": "::1"
+    },
+    {
+      "id": "8bsbdfj",
+      "path": "/",
+      "date": "2026-02-13T00:47:50.408Z",
+      "ip": "::1"
+    },
+    {
+      "id": "730s37",
+      "path": "/cart",
+      "date": "2026-02-13T00:56:26.884Z",
+      "ip": "::1"
+    },
+    {
+      "id": "t8t64",
+      "path": "/cart",
+      "date": "2026-02-13T00:56:38.847Z",
+      "ip": "::1"
+    }
+  ],
+  "id": "kqo11",
+  "path": "/",
+  "date": "2026-02-13T00:43:57.486Z",
+  "ip": "::1"
+}      "ip": "::1"
+    }
+  ],
+  "id": "kqo11",
+  "path": "/",
+  "date": "2026-02-13T00:43:57.486Z",
+  "ip": "::1"
+}
