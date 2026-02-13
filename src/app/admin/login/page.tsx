@@ -11,8 +11,15 @@ export default function AdminLogin() {
 
     const handleLogin = (e: React.FormEvent) => {
         e.preventDefault();
-        // Mock login - allow any credentials for demo
-        router.push("/admin");
+
+        // Credentials Check
+        if (email === "PEGAMOUGHIT" && password === "MOUGHIT") {
+            // Set cookie (valid for 1 day)
+            document.cookie = "admin_session=true; path=/; max-age=86400; SameSite=Strict";
+            router.push("/admin");
+        } else {
+            alert("Invalid Credentials");
+        }
     };
 
     return (
