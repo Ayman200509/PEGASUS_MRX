@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Loader2, Save, Send } from "lucide-react";
 import { Profile } from "@/lib/db";
+import { MediaPicker } from "@/components/admin/MediaPicker";
 
 export default function SettingsPage() {
     const [profile, setProfile] = useState<Profile | null>(null);
@@ -91,26 +92,22 @@ export default function SettingsPage() {
                                 )}
                             </div>
                             <div className="flex-1">
+
+                                // ... (rest of imports)
+
+                                // ... (inside component)
                                 <div className="mb-3">
-                                    <label className="block w-full cursor-pointer">
-                                        <input
-                                            type="file"
-                                            accept="image/*"
-                                            onChange={handleUpload}
-                                            className="hidden"
-                                        />
-                                        <div className="w-full bg-[#0a0a0c] border border-white/10 border-dashed hover:border-red-500/50 rounded-xl py-3 px-4 text-center transition-colors group">
-                                            {uploading ? (
-                                                <span className="text-sm text-gray-400 flex items-center justify-center gap-2">
-                                                    <Loader2 size={16} className="animate-spin" /> Uploading...
-                                                </span>
-                                            ) : (
+                                    <MediaPicker
+                                        type="image"
+                                        onSelect={(url) => setProfile(prev => prev ? { ...prev, avatar: url } : null)}
+                                        trigger={
+                                            <div className="w-full bg-[#0a0a0c] border border-white/10 border-dashed hover:border-red-500/50 rounded-xl py-3 px-4 text-center transition-colors group cursor-pointer">
                                                 <span className="text-sm text-gray-400 group-hover:text-white transition-colors">
-                                                    Click to Upload Image
+                                                    Click to Select / Upload Image
                                                 </span>
-                                            )}
-                                        </div>
-                                    </label>
+                                            </div>
+                                        }
+                                    />
                                 </div>
 
                                 <div className="relative">

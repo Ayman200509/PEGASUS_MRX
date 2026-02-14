@@ -25,7 +25,7 @@ const menuItems = [
     { icon: MessageSquare, label: "Support", href: "/admin/support" },
     { icon: Star, label: "Reviews", href: "/admin/reviews" },
     { icon: Eye, label: "Visitors", href: "/admin/visitors" },
-    { icon: ImageIcon, label: "Media", href: "/admin/media" },
+    { icon: ImageIcon, label: "Media Library", href: "/admin/library" },
     { icon: Settings, label: "Settings", href: "/admin/settings" },
 ];
 
