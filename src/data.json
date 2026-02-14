@@ -96,7 +96,48 @@
     }
   ],
   "categories": [],
-  "orders": [],
+  "orders": [
+    {
+      "id": "cef7404b-1faa-4e12-924a-ab770960213d",
+      "customerEmail": "twilioacc3@gmail.com",
+      "items": [
+        {
+          "title": "Test Product",
+          "price": 10,
+          "quantity": 1,
+          "id": "test-item",
+          "customValues": {
+            "Size": "M"
+          }
+        }
+      ],
+      "total": 10,
+      "status": "Pending Payment",
+      "date": "2026-02-14T21:40:16.668Z",
+      "ip": "::1",
+      "country": "Unknown"
+    },
+    {
+      "id": "e3a0a1d6-deea-49a9-93a0-9a7316552b08",
+      "customerEmail": "twilioacc3@gmail.com",
+      "items": [
+        {
+          "title": "Test Product",
+          "price": 10,
+          "quantity": 1,
+          "id": "test-item",
+          "customValues": {
+            "Size": "M"
+          }
+        }
+      ],
+      "total": 10,
+      "status": "Pending Payment",
+      "date": "2026-02-14T21:39:20.137Z",
+      "ip": "::1",
+      "country": "Unknown"
+    }
+  ],
   "tickets": [],
   "visits": [
     {

@@ -9,6 +9,8 @@ const transporter = nodemailer.createTransport({
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
     },
+    // debug: true,
+    // logger: true
 });
 
 const SENDER_EMAIL = process.env.SMTP_FROM || 'admin@pegasus1337.store';
@@ -109,6 +111,9 @@ export async function sendOrderEmail(order: Order, type: 'Pending' | 'Completed'
             from: `"Pegasus MRX" <${SENDER_EMAIL}>`,
             to: order.customerEmail,
             subject: subject,
+            text: isCompleted
+                ? `Order Delivered! Your order #${order.id} has been successfully processed. Total: $${order.total}`
+                : `Order Received. Please complete your payment for order #${order.id}. Total: $${order.total}`,
             html: html,
         });
         console.log(`Email sent to customer for order ${order.id} (${type})`);
