@@ -15,7 +15,7 @@ const nextConfig: NextConfig = {
     ],
   },
   // Ensure we can serve static files from public folder
-  output: 'standalone',
+  // Ensure we can serve static files from public folder
 };
 
 export default nextConfig;

@@ -54,7 +54,13 @@ export async function POST(request: Request) {
         const { payLink, error: payError } = await createPayment(newOrder.total, newOrder.customerEmail, newOrder.id, origin);
 
         // Send Pending Email with Payment Link
-        await sendOrderEmail(newOrder, 'Pending', payLink);
+        console.log(`[Order API] Attempting to send Pending email to ${newOrder.customerEmail} for order ${newOrder.id}`);
+        try {
+            await sendOrderEmail(newOrder, 'Pending', payLink);
+            console.log(`[Order API] Pending email sent successfully`);
+        } catch (emailError) {
+            console.error(`[Order API] Failed to send Pending email:`, emailError);
+        }
 
         return NextResponse.json({ ...newOrder, payLink });
     } catch (error) {

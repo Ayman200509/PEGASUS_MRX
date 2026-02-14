@@ -37,7 +37,13 @@ export async function POST(request: Request) {
 
         // Send Confirmation Email if Paid
         if (status === 'Paid') {
-            await sendOrderEmail(data.orders[orderIndex], 'Completed');
+            console.log(`[Callback API] Attempting to send Completed email to ${data.orders[orderIndex].customerEmail} for order ${orderId}`);
+            try {
+                await sendOrderEmail(data.orders[orderIndex], 'Completed');
+                console.log(`[Callback API] Completed email sent successfully`);
+            } catch (emailError) {
+                console.error(`[Callback API] Failed to send Completed email:`, emailError);
+            }
         }
 
         return NextResponse.json({ success: true });

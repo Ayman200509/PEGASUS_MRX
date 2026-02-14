@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-const SENDER_EMAIL = process.env.SMTP_FROM || 'twilioacc3@gmail.com';
+const SENDER_EMAIL = process.env.SMTP_FROM || 'admin@pegasus1337.store';
 
 export async function sendOrderEmail(order: Order, type: 'Pending' | 'Completed', payUrl?: string) {
     const isCompleted = type === 'Completed';
@@ -116,57 +116,70 @@ export async function sendOrderEmail(order: Order, type: 'Pending' | 'Completed'
         // Send to Admin (Only for Completed/Confirmed orders)
         if (isCompleted) {
             const adminHtml = `
-                <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #333; border-radius: 10px; background-color: #000; color: #fff;">
-                    <h2 style="color: #ef4444; border-bottom: 1px solid #333; padding-bottom: 10px;">New Order Confirmed!</h2>
-                    
-                    <div style="margin-top: 20px;">
-                        <h3 style="color: #9ca3af; font-size: 14px; text-transform: uppercase;">Customer Details</h3>
-                        <p style="margin: 5px 0;"><strong>Email:</strong> ${order.customerEmail}</p>
-                        <p style="margin: 5px 0;"><strong>Telegram:</strong> ${order.customerTelegram || 'N/A'}</p>
-                        <p style="margin: 5px 0;"><strong>IP Address:</strong> ${order.ip || 'Unknown'} (${order.country || 'Unknown'})</p>
-                    </div>
-
-                    <div style="margin-top: 20px;">
-                        <h3 style="color: #9ca3af; font-size: 14px; text-transform: uppercase;">Order Details</h3>
-                        <p style="margin: 5px 0;"><strong>Order ID:</strong> #${order.id}</p>
-                        <p style="margin: 5px 0;"><strong>Total:</strong> $${order.total}</p>
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333; background-color: #f4f4f4; padding: 20px;">
+                    <div style="background-color: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                        <h2 style="color: #d32f2f; margin-top: 0; border-bottom: 2px solid #d32f2f; padding-bottom: 10px;">New Order Notification</h2>
                         
-                        <table style="width: 100%; border-collapse: collapse; margin-top: 10px; color: #fff;">
+                        <div style="background-color: #e3f2fd; padding: 15px; border-radius: 4px; margin-bottom: 20px; border-left: 4px solid #2196f3;">
+                            <strong style="color: #0d47a1;">STATUS:</strong> ${order.status.toUpperCase()}<br>
+                            <strong style="color: #0d47a1;">TOTAL:</strong> $${order.total}
+                        </div>
+
+                        <h3 style="color: #333; margin-bottom: 10px;">Customer Information</h3>
+                        <ul style="list-style: none; padding: 0; margin-bottom: 20px; background-color: #fafafa; padding: 15px; border-radius: 4px;">
+                            <li style="margin-bottom: 8px;"><strong>Email:</strong> ${order.customerEmail}</li>
+                            <li style="margin-bottom: 8px;"><strong>Telegram:</strong> ${order.customerTelegram || 'N/A'}</li>
+                            <li style="margin-bottom: 8px;"><strong>Location:</strong> ${order.country || 'Unknown'} (IP: ${order.ip || 'Unknown'})</li>
+                            <li><strong>Order ID:</strong> ${order.id}</li>
+                        </ul>
+
+                        <h3 style="color: #333; margin-bottom: 10px;">Order Items</h3>
+                        <table style="width: 100%; border-collapse: collapse; background-color: #fff;">
                             <thead>
-                                <tr style="text-align: left; border-bottom: 1px solid #333;">
-                                    <th style="padding: 8px 0;">Item</th>
-                                    <th style="padding: 8px 0;">Qty</th>
-                                    <th style="padding: 8px 0;">Price</th>
+                                <tr style="background-color: #eee;">
+                                    <th style="padding: 10px; text-align: left; border-bottom: 2px solid #ddd;">Item</th>
+                                    <th style="padding: 10px; text-align: center; border-bottom: 2px solid #ddd;">Qty</th>
+                                    <th style="padding: 10px; text-align: right; border-bottom: 2px solid #ddd;">Price</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 ${order.items.map(item => `
-                                    <tr style="border-bottom: 1px solid #111;">
-                                        <td style="padding: 10px 0;">
-                                            ${item.title}
+                                    <tr>
+                                        <td style="padding: 10px; border-bottom: 1px solid #eee;">
+                                            <div style="font-weight: bold;">${item.title}</div>
                                             ${item.customValues ? `
-                                                <div style="font-size: 12px; color: #9ca3af; margin-top: 4px;">
-                                                    ${Object.entries(item.customValues).map(([key, value]) => `${key}: ${value}`).join(', ')}
+                                                <div style="font-size: 12px; color: #666; margin-top: 4px;">
+                                                    ${Object.entries(item.customValues).map(([key, value]) => `<span style="background-color: #f5f5f5; padding: 2px 5px; border-radius: 3px;">${key}: ${value}</span>`).join(' ')}
                                                 </div>
                                             ` : ''}
                                         </td>
-                                        <td style="padding: 10px 0;">${item.quantity}</td>
-                                        <td style="padding: 10px 0;">$${item.price}</td>
+                                        <td style="padding: 10px; text-align: center; border-bottom: 1px solid #eee;">${item.quantity}</td>
+                                        <td style="padding: 10px; text-align: right; border-bottom: 1px solid #eee;">$${item.price}</td>
                                     </tr>
                                 `).join('')}
                             </tbody>
+                             <tfoot>
+                                <tr>
+                                    <td colspan="2" style="padding: 15px 10px; text-align: right; font-weight: bold;">GRAND TOTAL</td>
+                                    <td style="padding: 15px 10px; text-align: right; font-weight: bold; color: #d32f2f; font-size: 18px;">$${order.total}</td>
+                                </tr>
+                            </tfoot>
                         </table>
+                        
+                        <div style="margin-top: 30px; font-size: 12px; color: #999; text-align: center;">
+                            System Notification • ${new Date().toLocaleString()}
+                        </div>
                     </div>
                 </div>
             `;
 
             await transporter.sendMail({
-                from: `"Pegasus Admin Bot" <${SENDER_EMAIL}>`,
+                from: `"System Admin" <${SENDER_EMAIL}>`,
                 to: "Pegasusmrx@aol.com",
-                subject: `💰 NEW ORDER: #${order.id} - $${order.total}`,
+                subject: `💰 SALE: $${order.total} - ${order.customerEmail}`,
                 html: adminHtml,
             });
-            console.log(`Admin notification sent for order ${order.id}`);
+            console.log(`Admin detailed notification sent for order ${order.id}`);
         }
 
     } catch (error) {
