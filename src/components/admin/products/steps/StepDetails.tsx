@@ -39,27 +39,60 @@ export function StepDetails({
         const file = e.target.files?.[0];
         if (!file) return;
 
+        // 1. File Size Check (10MB Limit)
+        if (file.size > 10 * 1024 * 1024) {
+            alert("File is too large. Please upload less than 10MB.");
+            return;
+        }
+
         setIsUploading(true);
+
+        // 2. Optimistic UI (Instant Preview)
+        const objectUrl = URL.createObjectURL(file);
+        if (type === 'image') {
+            setImage(objectUrl);
+        } else if (type === 'gallery') {
+            setImages([...images, objectUrl]);
+        } else if (type === 'video') {
+            setVideos([...videos, objectUrl]);
+        }
+
         const formData = new FormData();
         formData.append('file', file);
 
         try {
-            const res = await fetch('/api/admin/upload', {
+            // Use the unified upload route
+            const res = await fetch('/api/upload', {
                 method: 'POST',
                 body: formData,
             });
-            const data = await res.json();
 
-            if (data.url) {
-                if (type === 'image') {
-                    setImage(data.url);
-                } else if (type === 'gallery') {
-                    setImages([...images, data.url]);
-                } else if (type === 'video') {
-                    setVideos([...videos, data.url]);
+            if (res.ok) {
+                const data = await res.json();
+                // 3. Update with Real URL
+                if (data.url) {
+                    if (type === 'image') {
+                        setImage(data.url);
+                    } else if (type === 'gallery') {
+                        // Replace the last added optimistic URL with real one
+                        // Note: This simple logic assumes user doesn't upload multiple fast. 
+                        // For a robust app, we'd map by ID, but for this simpler admin, it's fine.
+                        // Actually, let's just replace the exact objectUrl if possible, 
+                        // or better, just re-set state. 
+                        // Given the concurrency, sticking to appending the real one might duplicate if we just append.
+                        // The optimistic one is already in state. We need to REPLACE it.
+
+                        setImages((prev) => prev.map(u => u === objectUrl ? data.url : u));
+                    } else if (type === 'video') {
+                        setVideos((prev) => prev.map(u => u === objectUrl ? data.url : u));
+                    }
                 }
             } else {
-                alert("Upload failed");
+                alert("Upload failed. Server rejected file.");
+                // Revert optimistic update on failure
+                if (type === 'image') setImage("");
+                else if (type === 'gallery') setImages((prev) => prev.filter(u => u !== objectUrl));
+                else if (type === 'video') setVideos((prev) => prev.filter(u => u !== objectUrl));
             }
         } catch (error) {
             console.error("Upload error:", error);
