@@ -64,7 +64,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
         const orderData = {
             id: orderId,
             customerEmail: email,
-            customerTelegram: "",
+            customerTelegram: getFieldValue("Telegram ID") || getFieldValue("Telegram") || "",
             items: items.map(item => ({
                 productId: item.id,
                 title: item.title,
@@ -78,6 +78,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
 
         // ... rest of submit logic
         try {
+            console.log("Submitting order...", orderData);
             // 1. Create Order and generate Payment Link in one go
             const res = await fetch('/api/orders', {
                 method: 'POST',
@@ -85,13 +86,16 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                 headers: { 'Content-Type': 'application/json' }
             });
 
+            console.log("Order API Response Status:", res.status);
             const data = await res.json();
+            console.log("Order API Response Data:", data);
 
             if (data.payLink) {
                 clearCart();
                 // 2. Redirect to Payment
                 window.location.href = data.payLink;
             } else {
+                console.error("No payLink returned", data);
                 alert("Payment initialization failed. Please try again.");
                 setIsSubmitting(false);
             }
