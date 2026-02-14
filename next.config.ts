@@ -1,7 +1,21 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'pegasus1337.store',
+      },
+      {
+        protocol: 'https',
+        hostname: 'localhost',
+      },
+    ],
+  },
+  // Ensure we can serve static files from public folder
+  output: 'standalone',
 };
 
 export default nextConfig;

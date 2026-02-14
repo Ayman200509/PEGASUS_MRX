@@ -16,11 +16,23 @@ export default function SettingsPage() {
     }, []);
 
     const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (!e.target.files || !e.target.files[0]) return;
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        // 1. File Size Check (5MB)
+        if (file.size > 5 * 1024 * 1024) {
+            alert("File is too large. Please upload an image smaller than 5MB.");
+            return;
+        }
+
         setUploading(true);
 
+        // 2. Instant Preview (Optimistic Update)
+        const objectUrl = URL.createObjectURL(file);
+        setProfile((prev) => prev ? { ...prev, avatar: objectUrl } : null);
+
         const formData = new FormData();
-        formData.append('file', e.target.files[0]);
+        formData.append('file', file);
 
         try {
             const res = await fetch('/api/upload', {
@@ -30,11 +42,10 @@ export default function SettingsPage() {
 
             if (res.ok) {
                 const data = await res.json();
-                if (profile) {
-                    setProfile({ ...profile, avatar: data.url });
-                }
+                // 3. Update with Real Server URL
+                setProfile((prev) => prev ? { ...prev, avatar: data.url } : null);
             } else {
-                alert("Upload failed");
+                alert("Upload failed. Server rejected the file.");
             }
         } catch (error) {
             console.error("Upload error:", error);
@@ -271,7 +282,7 @@ export default function SettingsPage() {
 
                     <div className="pt-4 border-t border-white/5">
                         <button
-                            disabled={saving}
+                            disabled={saving || uploading}
                             className="w-full bg-red-600 hover:bg-red-500 disabled:opacity-50 text-white font-bold py-3.5 rounded-xl shadow-[0_0_20px_rgba(220,38,38,0.3)] transition-all flex items-center justify-center gap-2"
                         >
                             {saving ? <Loader2 className="animate-spin" /> : <><Save size={18} /> Save Changes</>}
