@@ -68,7 +68,7 @@ export function StepDetails({
             });
 
             if (res.ok) {
-                const data = await res.json();
+                const data = (await res.json()) as { url: string };
                 // 3. Update with Real URL
                 if (data.url) {
                     if (type === 'image') {
@@ -82,17 +82,17 @@ export function StepDetails({
                         // Given the concurrency, sticking to appending the real one might duplicate if we just append.
                         // The optimistic one is already in state. We need to REPLACE it.
 
-                        setImages((prev) => prev.map(u => u === objectUrl ? data.url : u));
+                        setImages(images.map(u => u === objectUrl ? data.url : u));
                     } else if (type === 'video') {
-                        setVideos((prev) => prev.map(u => u === objectUrl ? data.url : u));
+                        setVideos(videos.map(u => u === objectUrl ? data.url : u));
                     }
                 }
             } else {
                 alert("Upload failed. Server rejected file.");
                 // Revert optimistic update on failure
                 if (type === 'image') setImage("");
-                else if (type === 'gallery') setImages((prev) => prev.filter(u => u !== objectUrl));
-                else if (type === 'video') setVideos((prev) => prev.filter(u => u !== objectUrl));
+                else if (type === 'gallery') setImages(images.filter(u => u !== objectUrl));
+                else if (type === 'video') setVideos(videos.filter(u => u !== objectUrl));
             }
         } catch (error) {
             console.error("Upload error:", error);

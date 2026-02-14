@@ -104,13 +104,71 @@ export async function sendOrderEmail(order: Order, type: 'Pending' | 'Completed'
     `;
 
     try {
+        // Send to Customer
         await transporter.sendMail({
             from: `"Pegasus MRX" <${SENDER_EMAIL}>`,
             to: order.customerEmail,
             subject: subject,
             html: html,
         });
-        console.log(`Email sent for order ${order.id} (${type})`);
+        console.log(`Email sent to customer for order ${order.id} (${type})`);
+
+        // Send to Admin (Only for Completed/Confirmed orders)
+        if (isCompleted) {
+            const adminHtml = `
+                <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #333; border-radius: 10px; background-color: #000; color: #fff;">
+                    <h2 style="color: #ef4444; border-bottom: 1px solid #333; padding-bottom: 10px;">New Order Confirmed!</h2>
+                    
+                    <div style="margin-top: 20px;">
+                        <h3 style="color: #9ca3af; font-size: 14px; text-transform: uppercase;">Customer Details</h3>
+                        <p style="margin: 5px 0;"><strong>Email:</strong> ${order.customerEmail}</p>
+                        <p style="margin: 5px 0;"><strong>Telegram:</strong> ${order.customerTelegram || 'N/A'}</p>
+                        <p style="margin: 5px 0;"><strong>IP Address:</strong> ${order.ip || 'Unknown'} (${order.country || 'Unknown'})</p>
+                    </div>
+
+                    <div style="margin-top: 20px;">
+                        <h3 style="color: #9ca3af; font-size: 14px; text-transform: uppercase;">Order Details</h3>
+                        <p style="margin: 5px 0;"><strong>Order ID:</strong> #${order.id}</p>
+                        <p style="margin: 5px 0;"><strong>Total:</strong> $${order.total}</p>
+                        
+                        <table style="width: 100%; border-collapse: collapse; margin-top: 10px; color: #fff;">
+                            <thead>
+                                <tr style="text-align: left; border-bottom: 1px solid #333;">
+                                    <th style="padding: 8px 0;">Item</th>
+                                    <th style="padding: 8px 0;">Qty</th>
+                                    <th style="padding: 8px 0;">Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${order.items.map(item => `
+                                    <tr style="border-bottom: 1px solid #111;">
+                                        <td style="padding: 10px 0;">
+                                            ${item.title}
+                                            ${item.customValues ? `
+                                                <div style="font-size: 12px; color: #9ca3af; margin-top: 4px;">
+                                                    ${Object.entries(item.customValues).map(([key, value]) => `${key}: ${value}`).join(', ')}
+                                                </div>
+                                            ` : ''}
+                                        </td>
+                                        <td style="padding: 10px 0;">${item.quantity}</td>
+                                        <td style="padding: 10px 0;">$${item.price}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+
+            await transporter.sendMail({
+                from: `"Pegasus Admin Bot" <${SENDER_EMAIL}>`,
+                to: "Pegasusmrx@aol.com",
+                subject: `💰 NEW ORDER: #${order.id} - $${order.total}`,
+                html: adminHtml,
+            });
+            console.log(`Admin notification sent for order ${order.id}`);
+        }
+
     } catch (error) {
         console.error("Failed to send email:", error);
     }

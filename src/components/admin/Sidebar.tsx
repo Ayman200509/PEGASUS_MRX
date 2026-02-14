@@ -10,7 +10,8 @@ import {
     MessageSquare,
     FolderOpen,
     Eye,
-    Star
+    Star,
+    Image as ImageIcon
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -24,6 +25,7 @@ const menuItems = [
     { icon: MessageSquare, label: "Support", href: "/admin/support" },
     { icon: Star, label: "Reviews", href: "/admin/reviews" },
     { icon: Eye, label: "Visitors", href: "/admin/visitors" },
+    { icon: ImageIcon, label: "Media", href: "/admin/media" },
     { icon: Settings, label: "Settings", href: "/admin/settings" },
 ];
 
