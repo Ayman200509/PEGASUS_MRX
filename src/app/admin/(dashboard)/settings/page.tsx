@@ -7,12 +7,42 @@ import { Profile } from "@/lib/db";
 export default function SettingsPage() {
     const [profile, setProfile] = useState<Profile | null>(null);
     const [saving, setSaving] = useState(false);
+    const [uploading, setUploading] = useState(false);
 
     useEffect(() => {
         fetch('/api/profile')
             .then(res => res.json())
             .then(data => setProfile(data));
     }, []);
+
+    const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (!e.target.files || !e.target.files[0]) return;
+        setUploading(true);
+
+        const formData = new FormData();
+        formData.append('file', e.target.files[0]);
+
+        try {
+            const res = await fetch('/api/upload', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (res.ok) {
+                const data = await res.json();
+                if (profile) {
+                    setProfile({ ...profile, avatar: data.url });
+                }
+            } else {
+                alert("Upload failed");
+            }
+        } catch (error) {
+            console.error("Upload error:", error);
+            alert("Upload error");
+        } finally {
+            setUploading(false);
+        }
+    };
 
     const handleSave = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -50,13 +80,37 @@ export default function SettingsPage() {
                                 )}
                             </div>
                             <div className="flex-1">
-                                <input
-                                    placeholder="Enter Image URL..."
-                                    value={profile.avatar || ""}
-                                    onChange={(e) => setProfile({ ...profile, avatar: e.target.value })}
-                                    className="w-full bg-[#0a0a0c] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder-gray-700 mb-2"
-                                />
-                                <p className="text-[10px] text-gray-500">Paste a direct link to an image (e.g., https://imgur.com/...)</p>
+                                <div className="mb-3">
+                                    <label className="block w-full cursor-pointer">
+                                        <input
+                                            type="file"
+                                            accept="image/*"
+                                            onChange={handleUpload}
+                                            className="hidden"
+                                        />
+                                        <div className="w-full bg-[#0a0a0c] border border-white/10 border-dashed hover:border-red-500/50 rounded-xl py-3 px-4 text-center transition-colors group">
+                                            {uploading ? (
+                                                <span className="text-sm text-gray-400 flex items-center justify-center gap-2">
+                                                    <Loader2 size={16} className="animate-spin" /> Uploading...
+                                                </span>
+                                            ) : (
+                                                <span className="text-sm text-gray-400 group-hover:text-white transition-colors">
+                                                    Click to Upload Image
+                                                </span>
+                                            )}
+                                        </div>
+                                    </label>
+                                </div>
+
+                                <div className="relative">
+                                    <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-600 text-xs font-bold">OR</span>
+                                    <input
+                                        placeholder="Paste Image URL..."
+                                        value={profile.avatar || ""}
+                                        onChange={(e) => setProfile({ ...profile, avatar: e.target.value })}
+                                        className="w-full bg-[#0a0a0c] border border-white/10 rounded-xl py-2 pl-10 pr-4 text-sm text-white focus:outline-none focus:border-red-500/50 transition-all placeholder-gray-700"
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Visit } from "@/lib/db";
-import { Eye, Calendar, Filter } from "lucide-react";
+import { Eye, Calendar, Filter, Trash2 } from "lucide-react";
 
 export default function VisitorsPage() {
     const [visits, setVisits] = useState<Visit[]>([]);
@@ -58,17 +58,35 @@ export default function VisitorsPage() {
                     <p className="text-gray-400">Track page views and user activity.</p>
                 </div>
 
-                <div className="flex items-center gap-2 bg-[#121215] p-1 rounded-xl border border-white/5">
-                    {['today', 'week', 'month', 'all'].map((f) => (
-                        <button
-                            key={f}
-                            onClick={() => setFilter(f)}
-                            className={`px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${filter === f ? 'bg-white text-black' : 'text-gray-500 hover:text-white hover:bg-white/5'
-                                }`}
-                        >
-                            {f === 'all' ? 'All Time' : f}
-                        </button>
-                    ))}
+                <div className="flex items-center gap-2">
+                    <button
+                        onClick={async () => {
+                            if (confirm("Are you sure you want to RESET all visitor data? This cannot be undone.")) {
+                                const res = await fetch('/api/analytics/reset', { method: 'POST' });
+                                if (res.ok) {
+                                    setVisits([]);
+                                    alert("Analytics Reset Successfully");
+                                }
+                            }
+                        }}
+                        className="px-4 py-2 bg-red-600/10 hover:bg-red-600 text-red-500 hover:text-white rounded-xl text-xs font-bold border border-red-600/20 transition-all uppercase tracking-wider flex items-center gap-2"
+                    >
+                        <Trash2 size={14} />
+                        Reset Views
+                    </button>
+
+                    <div className="flex items-center gap-2 bg-[#121215] p-1 rounded-xl border border-white/5">
+                        {['today', 'week', 'month', 'all'].map((f) => (
+                            <button
+                                key={f}
+                                onClick={() => setFilter(f)}
+                                className={`px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition-all ${filter === f ? 'bg-white text-black' : 'text-gray-500 hover:text-white hover:bg-white/5'
+                                    }`}
+                            >
+                                {f === 'all' ? 'All Time' : f}
+                            </button>
+                        ))}
+                    </div>
                 </div>
             </div>
 
