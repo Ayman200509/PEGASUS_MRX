@@ -114,11 +114,24 @@ export function StepContent({ type, customFields, setCustomFields, content, setC
                     </div>
                 )}
 
-                {/* Service Note */}
+                {/* Service Note & Message */}
                 {type === "Service" && (
-                    <div className="text-center py-8 text-gray-500 text-sm">
-                        <p>Services are processed manually.</p>
-                        <p className="text-xs mt-1">Make sure to add Custom Fields above to get necessary details from the buyer.</p>
+                    <div>
+                        <div className="flex justify-between mb-2">
+                            <label className="text-xs font-bold text-gray-500 uppercase tracking-widest">
+                                Delivery Instructions / Message
+                            </label>
+                        </div>
+                        <textarea
+                            value={content}
+                            onChange={(e) => setContent(e.target.value)}
+                            className="w-full bg-[#0a0a0c] border border-white/10 rounded-xl py-3 px-4 text-white focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all placeholder-gray-700 h-48 resize-none font-mono text-sm"
+                            placeholder="Enter the message you want to be delivered to the customer in the email box..."
+                        />
+                        <p className="text-xs text-gray-500 mt-2 flex items-center gap-1">
+                            <HelpCircle size={12} />
+                            This message will be displayed in a highlighted box in the order confirmation email.
+                        </p>
                     </div>
                 )}
             </div>

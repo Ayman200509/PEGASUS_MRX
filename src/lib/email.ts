@@ -157,6 +157,12 @@ export async function sendOrderEmail(order: Order, type: 'Pending' | 'Completed'
                                                     ${Object.entries(item.customValues).map(([key, value]) => `<span style="background-color: #f5f5f5; padding: 2px 5px; border-radius: 3px;">${key}: ${value}</span>`).join(' ')}
                                                 </div>
                                             ` : ''}
+                                            ${item.serviceMessage ? `
+                                                <div style="margin-top: 10px; background-color: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af; padding: 12px; border-radius: 6px; font-size: 13px; line-height: 1.5;">
+                                                    <strong style="display: block; margin-bottom: 4px; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px;">Instructions:</strong>
+                                                    ${item.serviceMessage.replace(/\n/g, '<br>')}
+                                                </div>
+                                            ` : ''}
                                         </td>
                                         <td style="padding: 10px; text-align: center; border-bottom: 1px solid #eee;">${item.quantity}</td>
                                         <td style="padding: 10px; text-align: right; border-bottom: 1px solid #eee;">$${item.price}</td>

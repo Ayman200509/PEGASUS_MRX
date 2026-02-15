@@ -64,6 +64,7 @@ export interface Order {
         price: string;
         quantity: number;
         customValues?: { [label: string]: string };
+        serviceMessage?: string;
     }[];
     total: string;
     status: string;

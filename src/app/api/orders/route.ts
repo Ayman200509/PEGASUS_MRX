@@ -32,11 +32,20 @@ export async function POST(request: Request) {
             request.headers.get("cf-ipcountry") ||
             "Unknown";
 
+        // Enhance items with Service Message if applicable
+        const enhancedItems = body.items.map((item: any) => {
+            const product = data.products.find(p => p.id === item.productId);
+            if (product && product.type === 'Service' && product.content) {
+                return { ...item, serviceMessage: product.content };
+            }
+            return item;
+        });
+
         const newOrder: Order = {
             id: body.id || uuidv4(),
             customerEmail: body.customerEmail,
             customerTelegram: body.customerTelegram,
-            items: body.items,
+            items: enhancedItems,
             total: body.total,
             status: body.status || "Pending Payment",
             date: new Date().toISOString(),
