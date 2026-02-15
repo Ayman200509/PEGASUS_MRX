@@ -16,7 +16,7 @@ export function PageViewTracker() {
         const trackVisit = async () => {
             try {
                 // Don't track admin pages to avoid inflating stats
-                if (pathname.startsWith('/moughit')) return;
+                if (pathname.startsWith('/pegapega')) return;
 
                 await fetch('/api/analytics/visit', {
                     method: 'POST',

@@ -13,10 +13,9 @@ export default function AdminLogin() {
         e.preventDefault();
 
         // Credentials Check
-        if (email === "PEGAMOUGHIT" && password === "MOUGHIT") {
-            // Set cookie (valid for 1 day)
-            document.cookie = "admin_session=true; path=/; max-age=86400; SameSite=Lax";
-            router.push("/moughit");
+        if (email === 'pegaadmin' && password === 'pegamrxadmin') {
+            document.cookie = 'admin_session=true; path=/';
+            router.push('/pegapega');
         } else {
             alert("Invalid Credentials");
         }

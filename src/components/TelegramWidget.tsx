@@ -31,7 +31,7 @@ export function TelegramWidget() {
             });
     }, []);
 
-    const isAdminPath = pathname?.startsWith('/moughit');
+    const isAdminPath = pathname?.startsWith('/pegapega');
 
     if (!profile?.telegramWidget?.enabled || !isVisible || isAdminPath) return null;
 
