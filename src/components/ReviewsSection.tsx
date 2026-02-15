@@ -104,7 +104,15 @@ export function ReviewsSection({ productId, productName }: ReviewsSectionProps) 
                                         </div>
                                         <div>
                                             <p className="font-bold text-white">{review.userName}</p>
-                                            <div className="text-xs text-gray-500">{formatDistanceToNow(new Date(review.date), { addSuffix: true })}</div>
+                                            <div className="text-xs text-gray-500">
+                                                {(() => {
+                                                    try {
+                                                        return formatDistanceToNow(new Date(review.date), { addSuffix: true });
+                                                    } catch (e) {
+                                                        return "Review";
+                                                    }
+                                                })()}
+                                            </div>
                                         </div>
                                     </div>
                                     <StarRating rating={review.rating} />

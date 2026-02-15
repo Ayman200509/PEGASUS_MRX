@@ -17,38 +17,9 @@ export function ProductMedia({ mainImage, title, imageColor, images = [], videos
     // Structure: { type: 'image' | 'video', src: string }
     const [activeMedia, setActiveMedia] = useState({ type: 'image', src: mainImage });
 
+    // Orientation lock code removed to prevent client-side errors on incompatible devices
     useEffect(() => {
-        const handleFullscreenChange = async () => {
-            // Entered fullscreen - try to lock to landscape
-            if (document.fullscreenElement) {
-                if (screen.orientation && 'lock' in screen.orientation) {
-                    try {
-                        // Use 'any' cast because TS might not know about lock method on some versions
-                        await (screen.orientation as any).lock('landscape');
-                    } catch (e) {
-                        console.log('Orientation lock failed (requires HTTPS/Secure Context)');
-                    }
-                }
-            } else {
-                // Exited fullscreen - unlock
-                if (screen.orientation && 'unlock' in screen.orientation) {
-                    try {
-                        (screen.orientation as any).unlock();
-                    } catch (e) {
-                        console.log('Unlock failed');
-                    }
-                }
-            }
-        };
-
-        // Add event listeners
-        document.addEventListener('fullscreenchange', handleFullscreenChange);
-        document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
-
-        return () => {
-            document.removeEventListener('fullscreenchange', handleFullscreenChange);
-            document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
-        };
+        // Optional: Add other initialization logic if needed
     }, []);
 
     const toggleFullscreen = () => {
