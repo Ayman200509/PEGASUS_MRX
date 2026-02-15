@@ -60,7 +60,8 @@ export default function FinancePage() {
 
     // Calculate Metrics
     const orders = data.orders || [];
-    const totalRevenue = orders.reduce((sum: number, order: any) => sum + parseFloat(order.total.replace(/[^0-9.]/g, '')), 0);
+    const completedOrders = orders.filter((o: any) => o.status === 'Completed');
+    const totalRevenue = completedOrders.reduce((sum: number, order: any) => sum + parseFloat(order.total.replace(/[^0-9.]/g, '')), 0);
     const totalOrders = orders.length;
     const averageOrderValue = totalOrders > 0 ? totalRevenue / totalOrders : 0;
 
@@ -79,10 +80,16 @@ export default function FinancePage() {
             return d.getMonth() === tMonth && d.getFullYear() === tYear;
         });
 
-        const rev = monthOrders.reduce((sum: number, o: any) => sum + parseFloat(o.total.replace(/[^0-9.]/g, '')), 0);
+        // Filter for completed orders for revenue calc
+        const monthRevenue = monthOrders
+            .filter((o: any) => o.status === 'Completed')
+            .reduce((sum: number, o: any) => sum + parseFloat(o.total.replace(/[^0-9.]/g, '')), 0);
+
         const count = monthOrders.length;
-        const aov = count > 0 ? rev / count : 0;
-        return { rev, count, aov };
+        // AOV based on revenue / total orders (or completed orders? Usually total valid orders)
+        // Let's stick to total orders for count, but revenue only from completed.
+        const aov = count > 0 ? monthRevenue / count : 0;
+        return { rev: monthRevenue, count, aov };
     };
 
     const currentData = getMonthData(0); // This Month
@@ -111,7 +118,7 @@ export default function FinancePage() {
 
     const revenueData = last7Days.map(day => {
         const dayRevenue = orders
-            .filter((o: any) => o.date.startsWith(day.date))
+            .filter((o: any) => o.date.startsWith(day.date) && o.status === 'Completed')
             .reduce((sum: number, o: any) => sum + parseFloat(o.total.replace(/[^0-9.]/g, '')), 0);
         return { name: day.dayName, revenue: dayRevenue };
     });
