@@ -50,7 +50,7 @@ export function RecentOrders() {
         <div className="glass-panel p-6 rounded-3xl mt-8">
             <div className="flex items-center justify-between mb-6">
                 <h3 className="text-white font-bold text-lg tracking-tight">Recent Orders</h3>
-                <Link href="/admin/orders" className="text-xs font-bold text-red-500 hover:text-white transition-colors uppercase tracking-widest">View All</Link>
+                <Link href="/pegapega/orders" className="text-xs font-bold text-red-500 hover:text-white transition-colors uppercase tracking-widest">View All</Link>
             </div>
 
             <div className="overflow-x-auto">

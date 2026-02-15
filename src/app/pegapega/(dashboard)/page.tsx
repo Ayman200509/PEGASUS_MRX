@@ -78,7 +78,7 @@ export default function AdminDashboard() {
                     <h1 className="text-3xl font-black text-white tracking-tighter">Dashboard</h1>
                     <p className="text-gray-400 text-sm mt-1">Welcome back to your store overview.</p>
                 </div>
-                <Link href="/admin/products" className="bg-red-600 hover:bg-red-500 text-white px-5 py-2.5 rounded-xl font-bold text-sm shadow-[0_0_20px_rgba(220,38,38,0.3)] hover:shadow-[0_0_30px_rgba(220,38,38,0.5)] transition-all flex items-center justify-center">
+                <Link href="/pegapega/products" className="bg-red-600 hover:bg-red-500 text-white px-5 py-2.5 rounded-xl font-bold text-sm shadow-[0_0_20px_rgba(220,38,38,0.3)] hover:shadow-[0_0_30px_rgba(220,38,38,0.5)] transition-all flex items-center justify-center">
                     + New Product
                 </Link>
             </div>
