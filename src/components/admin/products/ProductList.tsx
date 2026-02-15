@@ -1,6 +1,23 @@
 import { useState, useEffect } from "react";
-import { Edit2, Trash2, Plus, Search, Package, MoreHorizontal, Loader2, Save } from "lucide-react";
+import { Edit2, Trash2, Plus, Search, Package, Loader2, GripVertical } from "lucide-react";
 import { Product } from "@/lib/db";
+import {
+    DndContext,
+    closestCenter,
+    KeyboardSensor,
+    PointerSensor,
+    useSensor,
+    useSensors,
+    DragEndEvent
+} from '@dnd-kit/core';
+import {
+    arrayMove,
+    SortableContext,
+    sortableKeyboardCoordinates,
+    verticalListSortingStrategy,
+    useSortable
+} from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
 interface ProductListProps {
     products: Product[];
@@ -10,33 +27,142 @@ interface ProductListProps {
     onCreate: () => void;
 }
 
+// Sortable Row Component
+function SortableRow({ product, onEdit, onDelete }: { product: Product, onEdit: (p: Product) => void, onDelete: (id: string) => void }) {
+    const {
+        attributes,
+        listeners,
+        setNodeRef,
+        transform,
+        transition,
+        isDragging
+    } = useSortable({ id: product.id });
+
+    const style = {
+        transform: CSS.Transform.toString(transform),
+        transition,
+        zIndex: isDragging ? 10 : 1,
+        position: isDragging ? 'relative' as const : undefined,
+    };
+
+    return (
+        <tr
+            ref={setNodeRef}
+            style={style}
+            className={`group hover:bg-white/5 transition-colors ${isDragging ? 'bg-white/10 opacity-50' : ''}`}
+        >
+            <td className="py-4 pl-6 w-12 cursor-grab active:cursor-grabbing touch-none" {...attributes} {...listeners}>
+                <GripVertical size={20} className="text-gray-600 hover:text-white transition-colors" />
+            </td>
+            <td className="py-4">
+                <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-lg bg-[#0a0a0c] border border-white/10 overflow-hidden flex items-center justify-center">
+                        {product.image ? (
+                            <img src={product.image} alt={product.title} className="w-full h-full object-cover" />
+                        ) : (
+                            <Package size={20} className="text-gray-700" />
+                        )}
+                    </div>
+                    <div>
+                        <div className="font-bold text-white">{product.title}</div>
+                        <div className="text-[10px] text-gray-500">Edited just now</div>
+                    </div>
+                </div>
+            </td>
+            <td className="py-4">
+                <span className="inline-block px-2 py-1 rounded bg-purple-500/10 border border-purple-500/20 text-purple-400 text-[10px] font-bold uppercase tracking-wider">
+                    {product.type.toUpperCase()}
+                </span>
+            </td>
+            <td className="py-4 text-white font-mono font-bold">
+                ${product.price}
+            </td>
+            <td className="py-4 text-gray-400 font-mono text-sm">
+                {product.inStock ? "∞" : "0"}
+            </td>
+            <td className="py-4">
+                <span className={`inline-block text-[10px] font-bold uppercase tracking-wider ${product.inStock ? "text-green-500" : "text-red-500"}`}>
+                    {product.inStock ? "Active" : "Inactive"}
+                </span>
+            </td>
+            <td className="py-4 text-right pr-6">
+                <div className="flex items-center justify-end gap-2 opacity-50 group-hover:opacity-100 transition-opacity">
+                    <button
+                        onClick={() => onEdit(product)}
+                        className="p-2 hover:bg-amber-500/10 text-gray-500 hover:text-amber-500 rounded-lg transition-colors"
+                        title="Edit"
+                    >
+                        <Edit2 size={16} />
+                    </button>
+                    <button
+                        onClick={() => onDelete(product.id)}
+                        className="p-2 hover:bg-red-500/10 text-gray-500 hover:text-red-500 rounded-lg transition-colors"
+                        title="Delete"
+                    >
+                        <Trash2 size={16} />
+                    </button>
+                </div>
+            </td>
+        </tr>
+    );
+}
+
 export function ProductList({ products, loading, onEdit, onDelete, onCreate }: ProductListProps) {
     const [searchTerm, setSearchTerm] = useState("");
     const [localProducts, setLocalProducts] = useState<Product[]>([]);
-    const [updating, setUpdating] = useState<string | null>(null);
 
     useEffect(() => {
         setLocalProducts(products);
     }, [products]);
 
-    const handlePositionChange = async (id: string, newPosition: number) => {
-        setUpdating(id);
+    const sensors = useSensors(
+        useSensor(PointerSensor),
+        useSensor(KeyboardSensor, {
+            coordinateGetter: sortableKeyboardCoordinates,
+        })
+    );
 
-        // Optimistic update
-        setLocalProducts(prev => prev.map(p =>
-            p.id === id ? { ...p, position: newPosition } : p
-        ));
+    const handleDragEnd = async (event: DragEndEvent) => {
+        const { active, over } = event;
+
+        if (active.id !== over?.id) {
+            setLocalProducts((items) => {
+                const oldIndex = items.findIndex(i => i.id === active.id);
+                const newIndex = items.findIndex(i => i.id === over?.id);
+
+                const newItems = arrayMove(items, oldIndex, newIndex);
+
+                // Update positions in backend for ALL items (or just the changed ones)
+                // For simplicity/robustness, we re-assign positions based on index
+                const updates = newItems.map((item, index) => ({
+                    id: item.id,
+                    position: index
+                }));
+
+                // Fire and forget update (or handling loading state if strict)
+                updatePositions(updates);
+
+                return newItems;
+            });
+        }
+    };
+
+    const updatePositions = async (updates: { id: string, position: number }[]) => {
+        // We can send these one by one or create a bulk endpoint. 
+        // Given the requirement, I'll loop them for now as it's easiest without touching backend route too much,
+        // unless I want to add a PATCH bulk.
+        // Actually, let's just loop. It's fine for small lists.
 
         try {
-            await fetch('/api/products', {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id, position: newPosition })
-            });
+            await Promise.all(updates.map(u =>
+                fetch('/api/products', {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(u)
+                })
+            ));
         } catch (error) {
-            console.error("Failed to update position", error);
-        } finally {
-            setUpdating(null);
+            console.error("Failed to save positions", error);
         }
     };
 
@@ -44,6 +170,8 @@ export function ProductList({ products, loading, onEdit, onDelete, onCreate }: P
         p.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         p.type.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
+    const isSearching = searchTerm.length > 0;
 
     return (
         <div className="space-y-6 animate-in fade-in duration-500">
@@ -70,102 +198,109 @@ export function ProductList({ products, loading, onEdit, onDelete, onCreate }: P
             {/* Products Table */}
             <div className="glass-panel rounded-3xl overflow-hidden border border-white/5">
                 <div className="overflow-x-auto">
-                    <table className="w-full text-left border-collapse">
-                        <thead>
-                            <tr className="bg-white/5 text-gray-400 text-[10px] uppercase tracking-widest border-b border-white/5">
-                                <th className="py-4 pl-6 font-bold">Pos</th>
-                                <th className="py-4 font-bold">Product</th>
-                                <th className="py-4 font-bold">Type</th>
-                                <th className="py-4 font-bold">Price</th>
-                                <th className="py-4 font-bold">Stock</th>
-                                <th className="py-4 font-bold">Status</th>
-                                <th className="py-4 font-bold text-right pr-6">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody className="divide-y divide-white/5">
-                            {loading ? (
-                                <tr><td colSpan={6} className="text-center py-12 text-gray-500"><Loader2 className="animate-spin mx-auto mb-2" />Loading products...</td></tr>
-                            ) : filteredProducts.length === 0 ? (
-                                <tr>
-                                    <td colSpan={6} className="text-center py-12">
-                                        <div className="flex flex-col items-center justify-center">
-                                            <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mb-4">
-                                                <Package size={32} className="text-gray-600" />
-                                            </div>
-                                            <h3 className="text-lg font-bold text-white mb-1">No products found</h3>
-                                            <p className="text-gray-500 text-sm mb-6">Create your first product to start selling.</p>
-                                            <button
-                                                onClick={onCreate}
-                                                className="bg-white/10 hover:bg-white/20 text-white font-bold py-2 px-6 rounded-lg transition-all flex items-center gap-2"
-                                            >
-                                                <Plus size={16} /> Create Product
-                                            </button>
-                                        </div>
-                                    </td>
+                    <DndContext
+                        sensors={sensors}
+                        collisionDetection={closestCenter}
+                        onDragEnd={handleDragEnd}
+                    >
+                        <table className="w-full text-left border-collapse">
+                            <thead>
+                                <tr className="bg-white/5 text-gray-400 text-[10px] uppercase tracking-widest border-b border-white/5">
+                                    <th className="py-4 pl-6 font-bold w-12"></th>
+                                    <th className="py-4 font-bold">Product</th>
+                                    <th className="py-4 font-bold">Type</th>
+                                    <th className="py-4 font-bold">Price</th>
+                                    <th className="py-4 font-bold">Stock</th>
+                                    <th className="py-4 font-bold">Status</th>
+                                    <th className="py-4 font-bold text-right pr-6">Actions</th>
                                 </tr>
-                            ) : filteredProducts.map((product) => (
-                                <tr key={product.id} className="group hover:bg-white/5 transition-colors">
-                                    <td className="py-4 pl-6 w-20">
-                                        <input
-                                            type="number"
-                                            value={product.position || 0}
-                                            onChange={(e) => handlePositionChange(product.id, parseInt(e.target.value) || 0)}
-                                            className="w-16 bg-[#0a0a0c] border border-white/10 rounded-lg py-1 px-2 text-white text-center focus:outline-none focus:border-red-500 transition-all text-sm font-mono"
-                                        />
-                                    </td>
-                                    <td className="py-4">
-                                        <div className="flex items-center gap-4">
-                                            <div className="w-12 h-12 rounded-lg bg-[#0a0a0c] border border-white/10 overflow-hidden flex items-center justify-center">
-                                                {product.image ? (
-                                                    <img src={product.image} alt={product.title} className="w-full h-full object-cover" />
-                                                ) : (
-                                                    <Package size={20} className="text-gray-700" />
-                                                )}
+                            </thead>
+                            <tbody className="divide-y divide-white/5">
+                                {loading ? (
+                                    <tr><td colSpan={7} className="text-center py-12 text-gray-500"><Loader2 className="animate-spin mx-auto mb-2" />Loading products...</td></tr>
+                                ) : filteredProducts.length === 0 ? (
+                                    <tr>
+                                        <td colSpan={7} className="text-center py-12">
+                                            <div className="flex flex-col items-center justify-center">
+                                                <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mb-4">
+                                                    <Package size={32} className="text-gray-600" />
+                                                </div>
+                                                <h3 className="text-lg font-bold text-white mb-1">No products found</h3>
+                                                <p className="text-gray-500 text-sm mb-6">Create your first product to start selling.</p>
+                                                <button
+                                                    onClick={onCreate}
+                                                    className="bg-white/10 hover:bg-white/20 text-white font-bold py-2 px-6 rounded-lg transition-all flex items-center gap-2"
+                                                >
+                                                    <Plus size={16} /> Create Product
+                                                </button>
                                             </div>
-                                            <div>
-                                                <div className="font-bold text-white">{product.title}</div>
-                                                <div className="text-[10px] text-gray-500">Edited just now</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td className="py-4">
-                                        <span className="inline-block px-2 py-1 rounded bg-purple-500/10 border border-purple-500/20 text-purple-400 text-[10px] font-bold uppercase tracking-wider">
-                                            {product.type.toUpperCase()}
-                                        </span>
-                                    </td>
-                                    <td className="py-4 text-white font-mono font-bold">
-                                        ${product.price}
-                                    </td>
-                                    <td className="py-4 text-gray-400 font-mono text-sm">
-                                        {product.inStock ? "∞" : "0"}
-                                    </td>
-                                    <td className="py-4">
-                                        <span className={`inline-block text-[10px] font-bold uppercase tracking-wider ${product.inStock ? "text-green-500" : "text-red-500"}`}>
-                                            {product.inStock ? "Active" : "Inactive"}
-                                        </span>
-                                    </td>
-                                    <td className="py-4 text-right pr-6">
-                                        <div className="flex items-center justify-end gap-2 opacity-50 group-hover:opacity-100 transition-opacity">
-                                            <button
-                                                onClick={() => onEdit(product)}
-                                                className="p-2 hover:bg-amber-500/10 text-gray-500 hover:text-amber-500 rounded-lg transition-colors"
-                                                title="Edit"
-                                            >
-                                                <Edit2 size={16} />
-                                            </button>
-                                            <button
-                                                onClick={() => onDelete(product.id)}
-                                                className="p-2 hover:bg-red-500/10 text-gray-500 hover:text-red-500 rounded-lg transition-colors"
-                                                title="Delete"
-                                            >
-                                                <Trash2 size={16} />
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                                        </td>
+                                    </tr>
+                                ) : isSearching ? (
+                                    // Regular mapping when searching (disabled drag)
+                                    filteredProducts.map((product) => (
+                                        <tr key={product.id} className="group hover:bg-white/5 transition-colors">
+                                            <td className="py-4 pl-6 text-gray-600">
+                                                <Search size={16} />
+                                            </td>
+                                            <td className="py-4">
+                                                <div className="flex items-center gap-4">
+                                                    <div className="w-12 h-12 rounded-lg bg-[#0a0a0c] border border-white/10 overflow-hidden flex items-center justify-center">
+                                                        {product.image ? (
+                                                            <img src={product.image} alt={product.title} className="w-full h-full object-cover" />
+                                                        ) : (
+                                                            <Package size={20} className="text-gray-700" />
+                                                        )}
+                                                    </div>
+                                                    <div>
+                                                        <div className="font-bold text-white">{product.title}</div>
+                                                        <div className="text-[10px] text-gray-500">Edited just now</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td className="py-4">
+                                                <span className="inline-block px-2 py-1 rounded bg-purple-500/10 border border-purple-500/20 text-purple-400 text-[10px] font-bold uppercase tracking-wider">
+                                                    {product.type.toUpperCase()}
+                                                </span>
+                                            </td>
+                                            <td className="py-4 text-white font-mono font-bold">
+                                                ${product.price}
+                                            </td>
+                                            <td className="py-4 text-gray-400 font-mono text-sm">
+                                                {product.inStock ? "∞" : "0"}
+                                            </td>
+                                            <td className="py-4">
+                                                <span className={`inline-block text-[10px] font-bold uppercase tracking-wider ${product.inStock ? "text-green-500" : "text-red-500"}`}>
+                                                    {product.inStock ? "Active" : "Inactive"}
+                                                </span>
+                                            </td>
+                                            <td className="py-4 text-right pr-6">
+                                                <div className="flex items-center justify-end gap-2 opacity-50 group-hover:opacity-100 transition-opacity">
+                                                    <button onClick={() => onEdit(product)} className="p-2 hover:bg-amber-500/10 text-gray-500 hover:text-amber-500 rounded-lg transition-colors"><Edit2 size={16} /></button>
+                                                    <button onClick={() => onDelete(product.id)} className="p-2 hover:bg-red-500/10 text-gray-500 hover:text-red-500 rounded-lg transition-colors"><Trash2 size={16} /></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    // Sortable list when NOT searching
+                                    <SortableContext
+                                        items={filteredProducts.map(p => p.id)}
+                                        strategy={verticalListSortingStrategy}
+                                    >
+                                        {filteredProducts.map((product) => (
+                                            <SortableRow
+                                                key={product.id}
+                                                product={product}
+                                                onEdit={onEdit}
+                                                onDelete={onDelete}
+                                            />
+                                        ))}
+                                    </SortableContext>
+                                )}
+                            </tbody>
+                        </table>
+                    </DndContext>
                 </div>
             </div>
         </div>
