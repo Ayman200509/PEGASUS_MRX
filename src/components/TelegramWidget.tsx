@@ -14,15 +14,20 @@ export function TelegramWidget() {
 
     useEffect(() => {
         fetch('/api/profile')
-            .then(res => res.json())
+            .then(res => {
+                if (!res.ok) throw new Error("Profile API failed");
+                return res.json();
+            })
             .then(data => {
                 setProfile(data);
                 if (data.telegramWidget?.enabled) {
-                    // Show with a slight delay for better UX
                     setTimeout(() => setIsVisible(true), 1500);
-                    // Show label after button appears
                     setTimeout(() => setShowLabel(true), 2500);
                 }
+            })
+            .catch(err => {
+                console.error("TelegramWidget failed to load:", err);
+                // Fail silently, don't crash app
             });
     }, []);
 
