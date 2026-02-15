@@ -18,6 +18,7 @@ export interface Product {
     videos?: string[];
     content?: string;
     customFields?: { label: string; required: boolean; type: string }[];
+    position?: number;
 }
 
 export interface Profile {

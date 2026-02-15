@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Edit2, Trash2, Plus, Search, Package, MoreHorizontal, Loader2 } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Edit2, Trash2, Plus, Search, Package, MoreHorizontal, Loader2, Save } from "lucide-react";
 import { Product } from "@/lib/db";
 
 interface ProductListProps {
@@ -12,8 +12,35 @@ interface ProductListProps {
 
 export function ProductList({ products, loading, onEdit, onDelete, onCreate }: ProductListProps) {
     const [searchTerm, setSearchTerm] = useState("");
+    const [localProducts, setLocalProducts] = useState<Product[]>([]);
+    const [updating, setUpdating] = useState<string | null>(null);
 
-    const filteredProducts = products.filter(p =>
+    useEffect(() => {
+        setLocalProducts(products);
+    }, [products]);
+
+    const handlePositionChange = async (id: string, newPosition: number) => {
+        setUpdating(id);
+
+        // Optimistic update
+        setLocalProducts(prev => prev.map(p =>
+            p.id === id ? { ...p, position: newPosition } : p
+        ));
+
+        try {
+            await fetch('/api/products', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id, position: newPosition })
+            });
+        } catch (error) {
+            console.error("Failed to update position", error);
+        } finally {
+            setUpdating(null);
+        }
+    };
+
+    const filteredProducts = localProducts.filter(p =>
         p.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         p.type.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -46,7 +73,8 @@ export function ProductList({ products, loading, onEdit, onDelete, onCreate }: P
                     <table className="w-full text-left border-collapse">
                         <thead>
                             <tr className="bg-white/5 text-gray-400 text-[10px] uppercase tracking-widest border-b border-white/5">
-                                <th className="py-4 pl-6 font-bold">Product</th>
+                                <th className="py-4 pl-6 font-bold">Pos</th>
+                                <th className="py-4 font-bold">Product</th>
                                 <th className="py-4 font-bold">Type</th>
                                 <th className="py-4 font-bold">Price</th>
                                 <th className="py-4 font-bold">Stock</th>
@@ -77,7 +105,15 @@ export function ProductList({ products, loading, onEdit, onDelete, onCreate }: P
                                 </tr>
                             ) : filteredProducts.map((product) => (
                                 <tr key={product.id} className="group hover:bg-white/5 transition-colors">
-                                    <td className="py-4 pl-6">
+                                    <td className="py-4 pl-6 w-20">
+                                        <input
+                                            type="number"
+                                            value={product.position || 0}
+                                            onChange={(e) => handlePositionChange(product.id, parseInt(e.target.value) || 0)}
+                                            className="w-16 bg-[#0a0a0c] border border-white/10 rounded-lg py-1 px-2 text-white text-center focus:outline-none focus:border-red-500 transition-all text-sm font-mono"
+                                        />
+                                    </td>
+                                    <td className="py-4">
                                         <div className="flex items-center gap-4">
                                             <div className="w-12 h-12 rounded-lg bg-[#0a0a0c] border border-white/10 overflow-hidden flex items-center justify-center">
                                                 {product.image ? (

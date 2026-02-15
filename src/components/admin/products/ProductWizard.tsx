@@ -26,6 +26,7 @@ export function ProductWizard({ initialData, onCancel, onSuccess }: ProductWizar
     const [image, setImage] = useState("");
     const [images, setImages] = useState<string[]>([]);
     const [videos, setVideos] = useState<string[]>([]);
+    const [position, setPosition] = useState(0);
 
     // Content State
     const [customFields, setCustomFields] = useState<any[]>([]);
@@ -45,6 +46,7 @@ export function ProductWizard({ initialData, onCancel, onSuccess }: ProductWizar
             setVideos(initialData.videos || []);
             setContent(initialData.content || "");
             setCustomFields(initialData.customFields || []);
+            setPosition(initialData.position || 0);
         }
     }, [initialData]);
 
@@ -52,7 +54,7 @@ export function ProductWizard({ initialData, onCancel, onSuccess }: ProductWizar
         setIsSubmitting(true);
         const productData = {
             title, price, oldPrice, type, image, images, videos, inStock, description,
-            content, customFields
+            content, customFields, position
         };
 
         try {

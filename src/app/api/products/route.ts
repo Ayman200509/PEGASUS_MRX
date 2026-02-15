@@ -10,7 +10,12 @@ const generateId = () => Math.random().toString(36).substring(2, 9);
 export async function GET() {
     try {
         const data = await getData();
-        return NextResponse.json(data.products || []);
+        const products = data.products || [];
+
+        // Sort by position (ascending)
+        products.sort((a: any, b: any) => (a.position || 0) - (b.position || 0));
+
+        return NextResponse.json(products);
     } catch (error) {
         console.error("Products API GET Error:", error);
         return NextResponse.json({ error: "Failed to load products" }, { status: 500 });
@@ -35,7 +40,8 @@ export async function POST(request: Request) {
             images: body.images || [],
             videos: body.videos || [],
             content: body.content || "",
-            customFields: body.customFields || []
+            customFields: body.customFields || [],
+            position: body.position || 0
         };
 
         if (!data.products) data.products = [];

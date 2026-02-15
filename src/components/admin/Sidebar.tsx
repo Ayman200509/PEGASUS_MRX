@@ -14,7 +14,7 @@ import {
     Image // Changed from Image as ImageIcon
 } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 const menuItems = [
@@ -31,6 +31,12 @@ const menuItems = [
 
 export function AdminSidebar() {
     const pathname = usePathname();
+    const router = useRouter();
+
+    const handleLogout = () => {
+        document.cookie = 'admin_session=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+        router.push('/pegapega/login');
+    };
 
     return (
         <div className="w-64 h-screen bg-[#050505] border-r border-white/5 flex flex-col fixed left-0 top-0 overflow-y-auto z-50">
@@ -74,7 +80,10 @@ export function AdminSidebar() {
 
             {/* User / Logout */}
             <div className="p-4 mt-auto border-t border-white/5">
-                <button className="flex items-center gap-3 w-full px-4 py-3 rounded-xl text-gray-400 hover:text-red-500 hover:bg-red-600/10 transition-all group">
+                <button
+                    onClick={handleLogout}
+                    className="flex items-center gap-3 w-full px-4 py-3 rounded-xl text-gray-400 hover:text-red-500 hover:bg-red-600/10 transition-all group"
+                >
                     <LogOut size={20} />
                     <span className="text-sm font-bold">Logout</span>
                 </button>

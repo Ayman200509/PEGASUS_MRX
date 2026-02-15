@@ -80,7 +80,7 @@ export async function sendOrderEmail(order: Order, type: 'Pending' | 'Completed'
                                             `).join('')}
                                         </div>
                                     ` : ''}
-                                    ${item.serviceMessage ? `
+                                    ${isCompleted && item.serviceMessage ? `
                                         <div style="margin-top: 10px; background-color: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af; padding: 12px; border-radius: 6px; font-size: 13px; line-height: 1.5;">
                                             <strong style="display: block; margin-bottom: 4px; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px;">Instructions:</strong>
                                             ${item.serviceMessage.replace(/\n/g, '<br>')}
