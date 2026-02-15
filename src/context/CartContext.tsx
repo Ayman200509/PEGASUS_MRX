@@ -26,7 +26,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     // Load from local storage on mount
     useEffect(() => {
         try {
-            const saved = localStorage.getItem('pegasus_cart');
+            const saved = localStorage.getItem('pegasus_cart_v1');
             if (saved) {
                 const parsed = JSON.parse(saved);
                 if (Array.isArray(parsed)) {
@@ -45,7 +45,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     // Save to local storage on change
     useEffect(() => {
         if (isLoaded) {
-            localStorage.setItem('pegasus_cart', JSON.stringify(items));
+            localStorage.setItem('pegasus_cart_v1', JSON.stringify(items));
         }
     }, [items, isLoaded]);
 
