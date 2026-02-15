@@ -7,8 +7,28 @@ import { createPayment } from '@/lib/oxapay';
 export async function GET() {
     try {
         const data = await getData();
-        // Return orders or empty array if undefined
-        return NextResponse.json(data.orders || []);
+        const orders = data.orders || [];
+        let hasUpdates = false;
+
+        const now = new Date();
+        const EXPIRATION_TIME_MS = 30 * 60 * 1000; // 30 minutes
+
+        // Check for expired pending orders
+        orders.forEach(order => {
+            if (order.status === 'Pending Payment') {
+                const orderDate = new Date(order.date);
+                if (now.getTime() - orderDate.getTime() > EXPIRATION_TIME_MS) {
+                    order.status = 'Canceled';
+                    hasUpdates = true;
+                }
+            }
+        });
+
+        if (hasUpdates) {
+            await saveData(data);
+        }
+
+        return NextResponse.json(orders);
     } catch (error) {
         console.error("Orders API GET Error:", error);
         return NextResponse.json({ error: "Failed to load orders" }, { status: 500 });
