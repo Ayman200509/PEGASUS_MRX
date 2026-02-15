@@ -28,7 +28,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
         try {
             const saved = localStorage.getItem('pegasus_cart');
             if (saved) {
-                setItems(JSON.parse(saved));
+                const parsed = JSON.parse(saved);
+                if (Array.isArray(parsed)) {
+                    // Filter out invalid items (null, undefined, or missing id)
+                    const validItems = parsed.filter(item => item && typeof item === 'object' && item.id);
+                    setItems(validItems);
+                }
             }
         } catch (e) {
             console.error("Failed to load cart", e);
@@ -72,9 +77,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
     const clearCart = () => setItems([]);
 
     const cartTotal = items.reduce((sum, item) => {
+        if (!item) return sum;
         const priceString = typeof item.price === 'string' ? item.price : '0';
         const price = parseFloat(priceString.replace(/[^0-9.]/g, '')) || 0;
-        return sum + (price * item.quantity);
+        return sum + (price * (item.quantity || 1));
     }, 0);
 
     const cartCount = items.reduce((sum, item) => sum + item.quantity, 0);
