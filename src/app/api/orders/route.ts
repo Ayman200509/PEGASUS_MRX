@@ -50,7 +50,7 @@ export async function POST(request: Request) {
         await saveData(data);
 
         // Generate Payment Link
-        const origin = new URL(request.url).origin;
+        const origin = process.env.NEXT_PUBLIC_APP_URL || new URL(request.url).origin;
         const { payLink, error: payError } = await createPayment(newOrder.total, newOrder.customerEmail, newOrder.id, origin);
 
         // Send Pending Email with Payment Link
