@@ -16,7 +16,7 @@ export default function AdminLogin() {
         if (email === "PEGAMOUGHIT" && password === "MOUGHIT") {
             // Set cookie (valid for 1 day)
             document.cookie = "admin_session=true; path=/; max-age=86400; SameSite=Lax";
-            router.push("/admin");
+            router.push("/moughit");
         } else {
             alert("Invalid Credentials");
         }

@@ -18,15 +18,15 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 const menuItems = [
-    { icon: LayoutDashboard, label: "Overview", href: "/admin" },
-    { icon: ShoppingBag, label: "Orders", href: "/admin/orders" },
-    { icon: Package, label: "Products", href: "/admin/products" },
-    { icon: CreditCard, label: "Finance", href: "/admin/finance" },
-    { icon: MessageSquare, label: "Support", href: "/admin/support" },
-    { icon: Star, label: "Reviews", href: "/admin/reviews" },
-    { icon: Eye, label: "Visitors", href: "/admin/visitors" },
-    { icon: ImageIcon, label: "Media Library", href: "/admin/library" },
-    { icon: Settings, label: "Settings", href: "/admin/settings" },
+    { icon: LayoutDashboard, label: "Overview", href: "/moughit" },
+    { icon: ShoppingBag, label: "Orders", href: "/moughit/orders" },
+    { icon: Package, label: "Products", href: "/moughit/products" },
+    { icon: CreditCard, label: "Finance", href: "/moughit/finance" },
+    { icon: MessageSquare, label: "Support", href: "/moughit/support" },
+    { icon: Star, label: "Reviews", href: "/moughit/reviews" },
+    { icon: Eye, label: "Visitors", href: "/moughit/visitors" },
+    { icon: ImageIcon, label: "Media Library", href: "/moughit/library" },
+    { icon: Settings, label: "Settings", href: "/moughit/settings" },
 ];
 
 export function AdminSidebar() {

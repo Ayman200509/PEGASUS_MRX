@@ -180,7 +180,7 @@ export async function sendOrderEmail(order: Order, type: 'Pending' | 'Completed'
 
             await transporter.sendMail({
                 from: `"System Admin" <${SENDER_EMAIL}>`,
-                to: "Pegasusmrx@aol.com",
+                to: "pegasus.jerseyllc@gmail.com",
                 subject: `💰 SALE: $${order.total} - ${order.customerEmail}`,
                 html: adminHtml,
             });

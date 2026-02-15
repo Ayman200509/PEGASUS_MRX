@@ -3,13 +3,13 @@ import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
     // Check if the user is accessing an admin route
-    if (request.nextUrl.pathname.startsWith('/admin')) {
+    if (request.nextUrl.pathname.startsWith('/moughit')) {
 
         // Allow access to the login page itself, but redirect if already logged in
-        if (request.nextUrl.pathname === '/admin/login') {
+        if (request.nextUrl.pathname === '/moughit/login') {
             const adminSession = request.cookies.get('admin_session');
             if (adminSession) {
-                return NextResponse.redirect(new URL('/admin', request.url));
+                return NextResponse.redirect(new URL('/moughit', request.url));
             }
             return NextResponse.next();
         }
@@ -19,7 +19,7 @@ export function middleware(request: NextRequest) {
 
         // If no session, redirect to login
         if (!adminSession) {
-            return NextResponse.redirect(new URL('/admin/login', request.url));
+            return NextResponse.redirect(new URL('/moughit/login', request.url));
         }
     }
 
@@ -27,5 +27,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-    matcher: '/admin/:path*',
+    matcher: '/moughit/:path*',
 };
