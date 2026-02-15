@@ -95,6 +95,27 @@ export default function OrdersPage() {
         }
     };
 
+    const handleClearAll = async () => {
+        if (!confirm("⚠️ DANGER: This will delete ALL orders permanently.\n\nAre you sure you want to proceed?")) return;
+        if (!confirm("Really? This cannot be undone.")) return;
+
+        try {
+            const res = await fetch('/api/admin/orders/clear', {
+                method: 'DELETE',
+            });
+
+            if (res.ok) {
+                setOrders([]);
+                alert("All orders have been cleared.");
+            } else {
+                alert("Failed to clear orders.");
+            }
+        } catch (error) {
+            console.error("Error clearing orders:", error);
+            alert("Error clearing orders.");
+        }
+    };
+
     const filteredOrders = orders.filter(order => {
         const matchesSearch =
             order.customerEmail.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -140,6 +161,14 @@ export default function OrdersPage() {
                     <p className="text-gray-400 text-sm mt-1">View and manage your order history</p>
                 </div>
                 <div className="flex gap-2">
+                    <button
+                        onClick={handleClearAll}
+                        className="bg-red-900/20 hover:bg-red-900/40 text-red-500 border border-red-500/20 px-4 py-2 rounded-xl font-bold text-sm transition-all flex items-center gap-2"
+                        title="Delete All Orders"
+                    >
+                        <Trash2 size={16} />
+                        Clear All
+                    </button>
                     <button
                         onClick={syncOrders}
                         className={`bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl font-bold text-sm transition-all shadow-lg shadow-red-600/20 active:scale-95 flex items-center gap-2 ${isSyncing ? 'opacity-50 cursor-not-allowed' : ''}`}
