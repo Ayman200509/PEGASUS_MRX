@@ -23,7 +23,7 @@ export async function createPayment(amount: string, email: string, orderId: stri
         const data = await response.json();
 
         if (data.result === 100 && data.payLink) {
-            return { payLink: data.payLink };
+            return { payLink: data.payLink, trackId: data.trackId };
         } else {
             console.error("Oxapay Error:", data);
             return { error: data.message || "Payment generation failed" };

@@ -44,20 +44,23 @@ export async function POST(request: Request) {
             country
         };
 
-        // Add order to list
-        data.orders.unshift(newOrder); // Add to top
-
-        await saveData(data);
-
-        // Generate Payment Link
+        // Generate Payment Link FIRST to capture Track ID
         const origin = process.env.NEXT_PUBLIC_APP_URL || new URL(request.url).origin;
         console.log(`[Order API] Creating payment with Origin: ${origin}`);
-        console.log(`[Order API] NEXT_PUBLIC_APP_URL value: ${process.env.NEXT_PUBLIC_APP_URL}`);
 
-        const { payLink, error: payError } = await createPayment(newOrder.total, newOrder.customerEmail, newOrder.id, origin);
+        const { payLink, trackId, error: payError } = await createPayment(newOrder.total, newOrder.customerEmail, newOrder.id, origin);
 
-        // Send Pending Email with Payment Link
-        console.log(`[Order API] Attempting to send Pending email to ${newOrder.customerEmail} for order ${newOrder.id}`);
+        // Add trackId to order
+        if (trackId) {
+            newOrder.trackId = trackId; // Ensure your Order type has this optional field
+        }
+
+        // Add order to list
+        data.orders.unshift(newOrder);
+        await saveData(data);
+
+        // Send Pending Email
+        console.log(`[Order API] Attempting to send Pending email to ${newOrder.customerEmail}`);
         try {
             await sendOrderEmail(newOrder, 'Pending', payLink);
             console.log(`[Order API] Pending email sent successfully`);
