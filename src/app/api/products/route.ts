@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getData, saveData } from '@/lib/db';
-import { nanoid } from 'nanoid';
+
 
 // Helper for ID generation since we don't have nanoid installed yet, 
 // using a simple random string for now or better to install it.

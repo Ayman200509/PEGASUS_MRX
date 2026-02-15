@@ -2,6 +2,9 @@ import { getData } from '@/lib/db';
 import { Navbar } from "@/components/Navbar";
 import { Star, MessageSquare, User } from "lucide-react";
 import Link from 'next/link';
+import { Metadata } from 'next';
+
+export const dynamic = 'force-dynamic';
 
 export default async function ReviewsPage() {
     const data = await getData();

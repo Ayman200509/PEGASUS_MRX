@@ -1023,24 +1023,5 @@
       "ip": "::1"
     }
   ],
-  "reviews": [
-    {
-      "id": "d6877955-3796-4b74-b3bf-d1ed5e68f638",
-      "productId": "xb952iu",
-      "productName": "rrda",
-      "userName": "hjmhh",
-      "rating": 5,
-      "comment": "fdhdhfb",
-      "date": "2025-02-12T20:56"
-    },
-    {
-      "id": "b9ff0ebd-a417-49c4-8b0c-e9a3f859e09a",
-      "productId": "b4pwt0w",
-      "productName": "RDP",
-      "userName": "fhd",
-      "rating": 5,
-      "comment": "sfdfvd",
-      "date": "2026-01-01T00:00"
-    }
-  ]
+  "reviews": []
 }
