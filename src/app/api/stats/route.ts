@@ -8,10 +8,12 @@ export async function GET() {
         const products = data.products || [];
 
         // 1. Calculate Total Revenue
-        const totalRevenue = orders.reduce((acc, order) => {
-            const val = parseFloat(order.total);
-            return isNaN(val) ? acc : acc + val;
-        }, 0);
+        const totalRevenue = orders
+            .filter(o => o.status === 'Completed')
+            .reduce((acc, order) => {
+                const val = parseFloat(order.total);
+                return isNaN(val) ? acc : acc + val;
+            }, 0);
 
         // 2. Calculate Revenue Growth (Month over Month)
         const now = new Date();
@@ -26,7 +28,7 @@ export async function GET() {
         const currentMonthRevenue = orders
             .filter(o => {
                 const d = new Date(o.date);
-                return d.getMonth() === currentMonth && d.getFullYear() === currentYear;
+                return o.status === 'Completed' && d.getMonth() === currentMonth && d.getFullYear() === currentYear;
             })
             .reduce((acc, o) => {
                 const val = parseFloat(o.total);
@@ -36,7 +38,7 @@ export async function GET() {
         const lastMonthRevenue = orders
             .filter(o => {
                 const d = new Date(o.date);
-                return d.getMonth() === lastMonth && d.getFullYear() === lastMonthYear;
+                return o.status === 'Completed' && d.getMonth() === lastMonth && d.getFullYear() === lastMonthYear;
             })
             .reduce((acc, o) => {
                 const val = parseFloat(o.total);
@@ -73,10 +75,12 @@ export async function GET() {
                 return od >= d && od < nextDay;
             });
 
-            const dailyRevenue = dayOrders.reduce((acc, o) => {
-                const val = parseFloat(o.total);
-                return isNaN(val) ? acc : acc + val;
-            }, 0);
+            const dailyRevenue = dayOrders
+                .filter(o => o.status === 'Completed')
+                .reduce((acc, o) => {
+                    const val = parseFloat(o.total);
+                    return isNaN(val) ? acc : acc + val;
+                }, 0);
             const dailyOrdersCount = dayOrders.length;
 
             chartData.push({
