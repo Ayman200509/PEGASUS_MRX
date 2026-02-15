@@ -13,7 +13,7 @@ export async function createPayment(amount: string, email: string, orderId: stri
                 feePaidByPayer: 0,
                 underPaidCoverage: 0,
                 callbackUrl: `${origin}/api/checkout/callback`,
-                returnUrl: `${origin}/order/success?orderId=${orderId}`,
+                returnUrl: `${origin}/order/${orderId}/review`,
                 description: `Order #${orderId}`,
                 orderId: orderId,
                 email: email
