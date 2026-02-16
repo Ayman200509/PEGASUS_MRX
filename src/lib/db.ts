@@ -148,12 +148,29 @@ export async function getData(): Promise<Data> {
     }
 }
 
+const baseDataPath = path.join(process.cwd(), 'src/data.base.json');
+
 // @ts-ignore
 import defaultData from './data.default.json';
 
 function getDefaultData(): Data {
-    // Return a deep copy to prevent in-memory mutation of the imported JSON
-    return JSON.parse(JSON.stringify(defaultData)) as Data;
+    try {
+        // 1. Try to read runtime default (saved by admin)
+        // We use readFileSync here because this function must remain synchronous or we need to refactor widely 
+        // to make getDefaultData async (which it isn't currently). 
+        // ideally db.ts should be refactored to be fully async but for now to minimize breakage:
+        // We will try to read it via fs.readFileSync if we import 'fs'
+        // But since we use fs/promises above, we need standard fs for sync operations.
+        // Let's stick to the importing strategy for now, OR:
+        // Since we can't easily make this async without breaking callers, 
+        // We will rely on `resetData` to be async and handle the logic there.
+        // ACTUALLY: resetData is async. We can make `getDefaultData` return Promise<Data> but that breaks imports.
+        // ALTERNATIVE: resetData reads the file.
+        // Let's modify resetData solely to handle this logic.
+        return JSON.parse(JSON.stringify(defaultData)) as Data;
+    } catch (e) {
+        return JSON.parse(JSON.stringify(defaultData)) as Data;
+    }
 }
 
 export async function saveData(data: Data): Promise<void> {
@@ -172,6 +189,39 @@ export async function saveData(data: Data): Promise<void> {
 }
 
 export async function resetData(): Promise<void> {
-    const data = getDefaultData();
-    await saveData(data);
+    let dataToRestore: Data;
+
+    try {
+        // Try to read runtime base file
+        const baseContent = await fs.readFile(baseDataPath, 'utf-8');
+        dataToRestore = JSON.parse(baseContent);
+        console.log("[DB] Restoring from data.base.json (Admin Saved Configuration)");
+    } catch (error) {
+        console.log("[DB] Restoring from data.default.json (System Default)");
+        dataToRestore = getDefaultData();
+    }
+
+    await saveData(dataToRestore);
+}
+
+export async function saveCurrentAsDefault(): Promise<void> {
+    const currentData = await getData();
+
+    // Create a clean "base" state
+    const baseData: Data = {
+        profile: {
+            ...currentData.profile,
+            salesCount: 0, // Reset stats
+            productsCount: currentData.products.length // Update product count
+        },
+        products: currentData.products,
+        categories: currentData.categories,
+        orders: [],
+        tickets: [],
+        visits: [],
+        reviews: []
+    };
+
+    await fs.writeFile(baseDataPath, JSON.stringify(baseData, null, 2), 'utf-8');
+    console.log("[DB] Internal Restore Point Saved to data.base.json");
 }
