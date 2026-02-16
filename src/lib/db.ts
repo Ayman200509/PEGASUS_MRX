@@ -152,7 +152,8 @@ export async function getData(): Promise<Data> {
 import defaultData from './data.default.json';
 
 function getDefaultData(): Data {
-    return defaultData as Data;
+    // Return a deep copy to prevent in-memory mutation of the imported JSON
+    return JSON.parse(JSON.stringify(defaultData)) as Data;
 }
 
 export async function saveData(data: Data): Promise<void> {
