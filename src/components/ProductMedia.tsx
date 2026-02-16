@@ -38,13 +38,17 @@ export function ProductMedia({ mainImage, title, imageColor, images = [], videos
     return (
         <div className="space-y-6">
             {/* Main Display Area */}
-            <div className={`w-full aspect-square rounded-3xl ${imageColor || 'bg-[#121215]'} relative overflow-hidden flex items-center justify-center border border-white/5`}>
+            <div className={`w-full relative overflow-hidden flex items-center justify-center rounded-3xl ${imageColor || 'bg-[#121215]'} border border-white/5`}>
 
                 {activeMedia.type === 'image' ? (
                     activeMedia.src ? (
-                        <img src={activeMedia.src} alt={title} className="w-full h-full object-cover animate-in fade-in duration-300" />
+                        <img
+                            src={activeMedia.src}
+                            alt={title}
+                            className="w-full h-auto max-h-[70vh] object-contain animate-in fade-in duration-300" // Changed: flexible height and object-contain
+                        />
                     ) : (
-                        <div className="flex flex-col items-center">
+                        <div className="flex flex-col items-center py-20"> {/* Added padding for empty state */}
                             <span className="text-9xl font-black text-white/5 select-none">{title.charAt(0)}</span>
                         </div>
                     )
@@ -52,7 +56,7 @@ export function ProductMedia({ mainImage, title, imageColor, images = [], videos
                     // Video Player Container
                     <div
                         id="video-wrapper"
-                        className="w-full h-full flex items-center justify-center bg-black"
+                        className="w-full aspect-video flex items-center justify-center bg-black" // Changed: aspect-video for better video player shape
                         onClick={toggleFullscreen}
                     >
                         <video

@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import { writeFile, mkdir } from 'fs/promises';
 import path from 'path';
 
+export const maxDuration = 300; // 5 minutes
+
 export async function POST(request: Request) {
     try {
         const formData = await request.formData();
