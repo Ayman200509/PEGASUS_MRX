@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Loader2, Save, Send, Trash2, AlertTriangle } from "lucide-react";
+import { Loader2, Save, Send, Trash2, AlertTriangle, Download, Upload } from "lucide-react";
 import { Profile } from "@/lib/db";
 import { MediaPicker } from "@/components/admin/MediaPicker";
 
@@ -94,20 +94,31 @@ export default function SettingsPage() {
         }
     };
 
-    const handleSaveDefault = async () => {
-        if (!confirm("Update Restore Point?\n\nThis will save your CURRENT settings, products, and categories as the new 'Default'.\n\nOrders and Reviews will NOT be saved in the default.\n\nNext time you 'Reset Data', it will restore to THIS state.")) return;
+    const handleExport = () => {
+        window.location.href = '/api/admin/backup/export';
+    };
+
+    const handleImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        if (!confirm("⚠️ OVERWRITE WARNING ⚠️\n\nThis will overwrite your current site data with the backup.\n\nMake sure this is the correct backup file.")) return;
+
+        const formData = new FormData();
+        formData.append('file', file);
 
         setSaving(true);
         try {
-            const res = await fetch('/api/admin/save-default', { method: 'POST' });
+            const res = await fetch('/api/admin/backup/import', { method: 'POST', body: formData });
             if (res.ok) {
-                alert("Current configuration saved as the new Default!");
+                alert("Backup restored successfully! The page will reload.");
+                window.location.reload();
             } else {
-                alert("Failed to save default configuration.");
+                alert("Failed to restore backup.");
             }
         } catch (error) {
             console.error(error);
-            alert("Error saving default configuration.");
+            alert("Error restoring backup.");
         } finally {
             setSaving(false);
         }
