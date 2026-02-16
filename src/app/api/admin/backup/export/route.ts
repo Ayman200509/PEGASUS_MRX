@@ -39,7 +39,7 @@ export async function GET() {
         const buffer = zip.toBuffer();
         const filename = `backup-pegasus-${new Date().toISOString().split('T')[0]}.zip`;
 
-        return new NextResponse(buffer, {
+        return new NextResponse(buffer as any, {
             headers: {
                 'Content-Type': 'application/zip',
                 'Content-Disposition': `attachment; filename="${filename}"`,
