@@ -17,9 +17,17 @@ export function Navbar({ onContactClick }: { onContactClick?: () => void }) {
     const isHome = pathname === "/";
 
     useEffect(() => {
-        fetch('/api/profile')
-            .then(res => res.json())
-            .then(data => setProfile(data));
+        const fetchProfile = () => {
+            fetch('/api/profile')
+                .then(res => res.json())
+                .then(data => setProfile(data));
+        };
+
+        fetchProfile();
+
+        // Listen for profile updates
+        window.addEventListener('profileUpdated', fetchProfile);
+        return () => window.removeEventListener('profileUpdated', fetchProfile);
     }, []);
 
     return (

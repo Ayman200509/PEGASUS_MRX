@@ -45,6 +45,10 @@ export default function SettingsPage() {
                 const data = await res.json();
                 // 3. Update with Real Server URL
                 setProfile((prev) => prev ? { ...prev, avatar: data.url } : null);
+                alert("Avatar uploaded!");
+
+                // Trigger event to refresh Navbar logo immediately
+                window.dispatchEvent(new Event('profileUpdated'));
             } else {
                 alert("Upload failed. Server rejected the file.");
             }
@@ -69,6 +73,9 @@ export default function SettingsPage() {
 
         setSaving(false);
         alert("Profile updated successfully!");
+
+        // Trigger event to refresh Navbar logo
+        window.dispatchEvent(new Event('profileUpdated'));
     };
 
     const handleReset = async () => {
