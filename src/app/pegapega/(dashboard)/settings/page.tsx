@@ -333,7 +333,7 @@ export default function SettingsPage() {
 
 
                     {/* Configuration Management */}
-                    {/* Configuration Management */}
+
                     <div className="pt-6 border-t border-white/5">
                         <h3 className="text-blue-500 font-bold mb-4 flex items-center gap-2">
                             <Save size={18} />
