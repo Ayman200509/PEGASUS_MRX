@@ -1,4 +1,5 @@
 import fs from 'fs/promises';
+import * as fsSync from 'fs';
 import path from 'path';
 
 // Define the path to the JSON file
@@ -155,18 +156,11 @@ import defaultData from './data.default.json';
 
 function getDefaultData(): Data {
     try {
-        // 1. Try to read runtime default (saved by admin)
-        // We use readFileSync here because this function must remain synchronous or we need to refactor widely 
-        // to make getDefaultData async (which it isn't currently). 
-        // ideally db.ts should be refactored to be fully async but for now to minimize breakage:
-        // We will try to read it via fs.readFileSync if we import 'fs'
-        // But since we use fs/promises above, we need standard fs for sync operations.
-        // Let's stick to the importing strategy for now, OR:
-        // Since we can't easily make this async without breaking callers, 
-        // We will rely on `resetData` to be async and handle the logic there.
-        // ACTUALLY: resetData is async. We can make `getDefaultData` return Promise<Data> but that breaks imports.
-        // ALTERNATIVE: resetData reads the file.
-        // Let's modify resetData solely to handle this logic.
+        // SYNCHRONOUSLY check for runtime base file to avoid async changes to this function signature
+        if (fsSync.existsSync(baseDataPath)) {
+            const baseContent = fsSync.readFileSync(baseDataPath, 'utf-8');
+            return JSON.parse(baseContent) as Data;
+        }
         return JSON.parse(JSON.stringify(defaultData)) as Data;
     } catch (e) {
         return JSON.parse(JSON.stringify(defaultData)) as Data;
