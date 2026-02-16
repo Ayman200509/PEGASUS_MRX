@@ -333,27 +333,45 @@ export default function SettingsPage() {
 
 
                     {/* Configuration Management */}
+                    {/* Configuration Management */}
                     <div className="pt-6 border-t border-white/5">
                         <h3 className="text-blue-500 font-bold mb-4 flex items-center gap-2">
                             <Save size={18} />
-                            Backup Configuration
+                            Full Backup System
                         </h3>
                         <div className="bg-blue-500/10 border border-blue-500/20 rounded-2xl p-6 mb-6">
-                            <h4 className="text-white font-bold mb-2">Save Current State as Default</h4>
+                            <h4 className="text-white font-bold mb-2">Export / Import Website Data</h4>
                             <p className="text-gray-400 text-sm mb-4">
-                                Save your current <strong>Products, Categories, and Settings</strong> as the new "Restore Point".
+                                Download a full backup of your website (including Products, Orders, and Images).
                                 <br />
-                                Useful after you finish setting up your store. Orders and Visits are NOT included.
+                                You can restore this backup later if needed.
                             </p>
-                            <button
-                                type="button"
-                                onClick={handleSaveDefault}
-                                disabled={saving}
-                                className="bg-blue-500/20 hover:bg-blue-500 text-blue-500 hover:text-white border border-blue-500/50 font-bold py-3 px-6 rounded-xl transition-all flex items-center gap-2 text-sm"
-                            >
-                                <Save size={16} />
-                                Save Configuration as Restore Point
-                            </button>
+                            <div className="flex gap-4">
+                                <button
+                                    type="button"
+                                    onClick={handleExport}
+                                    className="bg-blue-500/20 hover:bg-blue-500 text-blue-500 hover:text-white border border-blue-500/50 font-bold py-3 px-6 rounded-xl transition-all flex items-center gap-2 text-sm flex-1 justify-center"
+                                >
+                                    <Download size={16} />
+                                    Export Backup (ZIP)
+                                </button>
+
+                                <div className="relative flex-1">
+                                    <input
+                                        type="file"
+                                        accept=".zip"
+                                        onChange={handleImport}
+                                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                                    />
+                                    <button
+                                        type="button"
+                                        className="w-full bg-emerald-500/20 hover:bg-emerald-500 text-emerald-500 hover:text-white border border-emerald-500/50 font-bold py-3 px-6 rounded-xl transition-all flex items-center gap-2 text-sm justify-center"
+                                    >
+                                        <Upload size={16} />
+                                        Import Backup (ZIP)
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     {/* Danger Zone */}
