@@ -169,3 +169,8 @@ export async function saveData(data: Data): Promise<void> {
         throw error;
     }
 }
+
+export async function resetData(): Promise<void> {
+    const data = getDefaultData();
+    await saveData(data);
+}

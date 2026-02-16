@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Loader2, Save, Send } from "lucide-react";
+import { Loader2, Save, Send, Trash2, AlertTriangle } from "lucide-react";
 import { Profile } from "@/lib/db";
 import { MediaPicker } from "@/components/admin/MediaPicker";
 
@@ -69,6 +69,29 @@ export default function SettingsPage() {
 
         setSaving(false);
         alert("Profile updated successfully!");
+    };
+
+    const handleReset = async () => {
+        if (!confirm("⚠️ ARE YOU SURE? ⚠️\n\nThis will DELETE ALL orders, visits, and support tickets.\nIt will reset the database to the default clean state.\n\nType 'RESET' to confirm.")) return;
+
+        const userInput = prompt("Type 'RESET' to confirm deletion:");
+        if (userInput !== 'RESET') return;
+
+        setSaving(true);
+        try {
+            const res = await fetch('/api/admin/reset', { method: 'POST' });
+            if (res.ok) {
+                alert("Data has been reset to defaults.");
+                window.location.reload();
+            } else {
+                alert("Failed to reset data.");
+            }
+        } catch (error) {
+            console.error(error);
+            alert("Error resetting data.");
+        } finally {
+            setSaving(false);
+        }
     };
 
     if (!profile) return <div className="p-12 text-center text-gray-500">Loading Settings...</div>;
@@ -274,6 +297,32 @@ export default function SettingsPage() {
                                     </div>
                                 </div>
                             )}
+                        </div>
+                    </div>
+
+                    {/* Danger Zone */}
+                    <div className="pt-6 border-t border-white/5">
+                        <h3 className="text-red-500 font-bold mb-4 flex items-center gap-2">
+                            <AlertTriangle size={18} />
+                            Danger Zone
+                        </h3>
+                        <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-6">
+                            <h4 className="text-white font-bold mb-2">Reset Database</h4>
+                            <p className="text-gray-400 text-sm mb-4">
+                                This will wipe all **Orders, Visits, Support Tickets, and Reviews**.
+                                It will restore the database to the default configuration (Products and Settings will be kept as per the default file).
+                                <br />
+                                <strong>This action cannot be undone.</strong>
+                            </p>
+                            <button
+                                type="button"
+                                onClick={handleReset}
+                                disabled={saving}
+                                className="bg-red-500/20 hover:bg-red-500 text-red-500 hover:text-white border border-red-500/50 font-bold py-3 px-6 rounded-xl transition-all flex items-center gap-2 text-sm"
+                            >
+                                <Trash2 size={16} />
+                                Reset Data to Defaults
+                            </button>
                         </div>
                     </div>
 
