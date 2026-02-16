@@ -102,7 +102,7 @@ export async function sendOrderEmail(order: Order, type: 'Pending' | 'Completed'
             </div>
 
             <div style="text-align: center; color: #9ca3af; font-size: 12px; margin-top: 40px; border-top: 1px solid #f3f4f6; padding-top: 25px;">
-                <p style="margin: 0; font-weight: bold;">© ${new Date().getFullYear()} PEGASUS MRX</p>
+                <p style="margin: 0; font-weight: bold;">© ${new Date().getFullYear()} PEGASUS MRX SHOP</p>
                 <p style="margin: 5px 0;">This is an automated message, please do not reply.</p>
                 <div style="margin-top: 15px;">
                     <a href="https://t.me/PEGASUS_MRX" style="color: #ef4444; text-decoration: none; font-weight: bold;">Contact Support on Telegram</a>
@@ -114,7 +114,7 @@ export async function sendOrderEmail(order: Order, type: 'Pending' | 'Completed'
     try {
         // Send to Customer
         await transporter.sendMail({
-            from: `"Pegasus MRX" <${SENDER_EMAIL}>`,
+            from: `"PEGASUS MRX SHOP" <${SENDER_EMAIL}>`,
             to: order.customerEmail,
             subject: subject,
             text: isCompleted

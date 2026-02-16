@@ -37,7 +37,7 @@ export async function GET(request: Request) {
         const info = await transporter.sendMail({
             from: `"Pegasus Diagnostic" <${process.env.SMTP_FROM || 'admin@pegasus1337.store'}>`,
             to: to,
-            subject: 'Pegasus MRX Diagnostic Email',
+            subject: 'PEGASUS MRX SHOP Diagnostic Email',
             text: 'If you received this, the Next.js app can send emails.',
             html: '<b>If you received this, the Next.js app can send emails.</b>',
         });

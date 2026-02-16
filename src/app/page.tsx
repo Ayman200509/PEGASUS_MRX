@@ -34,7 +34,7 @@ export default function Home() {
         <div className="flex flex-col items-center gap-4">
           <div className="w-8 h-1 bg-red-600/20 rounded-full" />
           <p className="text-gray-600 text-xs uppercase tracking-widest font-medium">
-            © {new Date().getFullYear()} Pegasus MRX. All rights reserved.
+            © {new Date().getFullYear()} PEGASUS MRX SHOP. All rights reserved.
           </p>
         </div>
       </footer>

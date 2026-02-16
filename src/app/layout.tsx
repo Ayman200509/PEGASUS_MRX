@@ -9,7 +9,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Pegasus MRX",
+  title: "PEGASUS MRX SHOP",
   description: "Premium Digital Products",
 };
 

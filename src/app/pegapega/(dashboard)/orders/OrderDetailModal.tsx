@@ -184,7 +184,7 @@ export function OrderDetailModal({ order, onClose }: OrderDetailModalProps) {
                 {/* Footer Actions */}
                 <div className="p-6 border-t border-white/5 bg-white/[0.01] flex items-center justify-between">
                     <p className="text-[10px] text-gray-600 font-medium">
-                        Order processed securely via PEGASUS MRX infrastructure.
+                        Order processed securely via PEGASUS MRX SHOP infrastructure.
                     </p>
                     <button
                         onClick={onClose}
