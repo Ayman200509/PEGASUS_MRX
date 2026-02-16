@@ -15,6 +15,7 @@ export default function MediaLibraryPage() {
     const [files, setFiles] = useState<MediaFile[]>([]);
     const [loading, setLoading] = useState(true);
     const [uploading, setUploading] = useState(false);
+    const [uploadProgress, setUploadProgress] = useState<{ current: number; total: number } | null>(null);
     const [copiedUrl, setCopiedUrl] = useState<string | null>(null);
 
     // Fetch files on mount
@@ -48,6 +49,8 @@ export default function MediaLibraryPage() {
             // Upload each file sequentially
             for (let i = 0; i < files.length; i++) {
                 const file = files[i];
+                setUploadProgress({ current: i + 1, total: files.length });
+
                 const formData = new FormData();
                 formData.append("file", file);
 
@@ -81,6 +84,7 @@ export default function MediaLibraryPage() {
             alert("Failed to upload files");
         } finally {
             setUploading(false);
+            setUploadProgress(null);
             // Reset input
             e.target.value = "";
         }
@@ -126,7 +130,14 @@ export default function MediaLibraryPage() {
                     ${uploading ? "opacity-50 cursor-not-allowed" : ""}
                 `}>
                     {uploading ? <Loader2 className="animate-spin" /> : <Upload size={20} />}
-                    <span>{uploading ? "Uploading..." : "Upload New"}</span>
+                    <span>
+                        {uploading
+                            ? uploadProgress
+                                ? `Uploading ${uploadProgress.current}/${uploadProgress.total}...`
+                                : "Uploading..."
+                            : "Upload New"
+                        }
+                    </span>
                     <input
                         type="file"
                         className="hidden"
@@ -137,6 +148,26 @@ export default function MediaLibraryPage() {
                     />
                 </label>
             </div>
+
+            {/* Upload Progress Bar */}
+            {uploadProgress && (
+                <div className="bg-[#111] border border-white/10 rounded-2xl p-6 space-y-3">
+                    <div className="flex items-center justify-between text-sm">
+                        <span className="text-gray-400 font-medium">
+                            Uploading file {uploadProgress.current} of {uploadProgress.total}
+                        </span>
+                        <span className="text-red-500 font-bold">
+                            {Math.round((uploadProgress.current / uploadProgress.total) * 100)}%
+                        </span>
+                    </div>
+                    <div className="w-full bg-white/5 rounded-full h-2 overflow-hidden">
+                        <div
+                            className="h-full bg-gradient-to-r from-red-600 to-red-500 transition-all duration-300 ease-out rounded-full"
+                            style={{ width: `${(uploadProgress.current / uploadProgress.total) * 100}%` }}
+                        />
+                    </div>
+                </div>
+            )}
 
             {/* Gallery Grid */}
             {loading ? (
