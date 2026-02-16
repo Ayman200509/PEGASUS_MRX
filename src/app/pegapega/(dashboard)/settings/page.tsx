@@ -161,7 +161,7 @@ export default function SettingsPage() {
         <div className="max-w-2xl mx-auto">
             {importProgress !== null && (
                 <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
-                    <div className="bg-[#121215] border border-white/10 p-8 rounded-3xl max-w-md w-full text-center">
+                    <div className="bg-[#121215] border border-white/10 p-6 md:p-8 rounded-3xl max-w-md w-full text-center">
                         <Loader2 className="animate-spin w-12 h-12 text-blue-500 mx-auto mb-4" />
                         <h3 className="text-xl font-bold text-white mb-2">
                             {importProgress < 100 ? 'Uploading Backup...' : 'Processing Backup...'}
@@ -181,7 +181,7 @@ export default function SettingsPage() {
                     </div>
                 </div>
             )}
-            <div className="glass-panel p-8 rounded-3xl">
+            <div className="glass-panel p-4 md:p-8 rounded-3xl">
                 <h1 className="text-2xl font-black text-white tracking-tighter mb-2">Profile Settings</h1>
                 <p className="text-gray-400 text-sm mb-8">Update your public profile information.</p>
 
@@ -399,7 +399,7 @@ export default function SettingsPage() {
                                 <br />
                                 You can restore this backup later if needed.
                             </p>
-                            <div className="flex gap-4">
+                            <div className="flex flex-col sm:flex-row gap-4">
                                 <button
                                     type="button"
                                     onClick={handleExport}
