@@ -5,42 +5,21 @@ import Link from "next/link";
 import { useCart } from "@/context/CartContext";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { useEffect, useState } from "react";
-import { Profile } from "@/lib/db";
 
 export function Navbar({ onContactClick }: { onContactClick?: () => void }) {
     const { items } = useCart();
     const pathname = usePathname();
     const cartCount = items.reduce((acc, item) => acc + item.quantity, 0);
-    const [profile, setProfile] = useState<Profile | null>(null);
 
     const isHome = pathname === "/";
-
-    useEffect(() => {
-        const fetchProfile = () => {
-            fetch('/api/profile')
-                .then(res => res.json())
-                .then(data => setProfile(data));
-        };
-
-        fetchProfile();
-
-        // Listen for profile updates
-        window.addEventListener('profileUpdated', fetchProfile);
-        return () => window.removeEventListener('profileUpdated', fetchProfile);
-    }, []);
 
     return (
         <nav className="fixed top-0 left-0 w-full z-50 px-6 py-6 transition-all duration-300">
             <div className="max-w-7xl mx-auto flex items-center justify-between">
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-3 group cursor-pointer">
-                    <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center overflow-hidden group-hover:bg-red-500/10 group-hover:border-red-500/30 transition-all duration-300">
-                        {profile?.avatar ? (
-                            <img src={profile.avatar} alt="Logo" className="w-full h-full object-cover" />
-                        ) : (
-                            <span className="text-xs font-black text-gray-400 group-hover:text-red-500">MRX</span>
-                        )}
+                    <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-red-500/10 group-hover:border-red-500/30 transition-all duration-300">
+                        <span className="text-xs font-black text-gray-400 group-hover:text-red-500">MRX</span>
                     </div>
                 </Link>
 
