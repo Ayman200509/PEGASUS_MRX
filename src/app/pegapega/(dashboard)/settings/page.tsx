@@ -98,6 +98,8 @@ export default function SettingsPage() {
         window.location.href = '/api/admin/backup/export';
     };
 
+    const [importProgress, setImportProgress] = useState<number | null>(null);
+
     const handleImport = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file) return;
@@ -105,32 +107,50 @@ export default function SettingsPage() {
         if (!confirm("⚠️ OVERWRITE WARNING ⚠️\n\nThis will overwrite your current site data with the backup.\n\nMake sure this is the correct backup file.")) return;
 
         setSaving(true);
+        setImportProgress(0);
+
         try {
-            // Use raw binary upload instead of FormData to avoid memory issues with large files
-            const res = await fetch('/api/admin/backup/import', {
-                method: 'POST',
-                body: file,
-                headers: {
-                    'Content-Type': 'application/octet-stream',
-                    'x-filename': file.name
-                },
-                // @ts-ignore - duplay prop for progress tracking if needed in future
-                duplex: 'half'
+            await new Promise((resolve, reject) => {
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', '/api/admin/backup/import');
+                xhr.setRequestHeader('x-filename', file.name);
+
+                // Track upload progress
+                xhr.upload.onprogress = (event) => {
+                    if (event.lengthComputable) {
+                        const percentComplete = (event.loaded / event.total) * 100;
+                        setImportProgress(Math.round(percentComplete));
+                    }
+                };
+
+                xhr.onload = async () => {
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                        resolve(xhr.response);
+                    } else {
+                        let errorMessage = 'Unknown error';
+                        try {
+                            const error = JSON.parse(xhr.responseText);
+                            errorMessage = error.error || errorMessage;
+                        } catch (e) { }
+                        reject(new Error(errorMessage));
+                    }
+                };
+
+                xhr.onerror = () => reject(new Error('Network error'));
+
+                // Send raw file
+                xhr.setRequestHeader('Content-Type', 'application/octet-stream');
+                xhr.send(file);
             });
 
-            if (res.ok) {
-                alert("Backup restored successfully! The page will reload.");
-                window.location.reload();
-            } else {
-                const error = await res.json();
-                alert(`Failed to restore backup: ${error.error || 'Unknown error'}`);
-            }
-        } catch (error) {
+            alert("Backup restored successfully! The page will reload.");
+            window.location.reload();
+        } catch (error: any) {
             console.error(error);
-            alert("Error restoring backup.");
+            alert(`Failed to restore backup: ${error.message}`);
         } finally {
             setSaving(false);
-            // Reset input
+            setImportProgress(null);
             e.target.value = '';
         }
     };
@@ -139,6 +159,28 @@ export default function SettingsPage() {
 
     return (
         <div className="max-w-2xl mx-auto">
+            {importProgress !== null && (
+                <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
+                    <div className="bg-[#121215] border border-white/10 p-8 rounded-3xl max-w-md w-full text-center">
+                        <Loader2 className="animate-spin w-12 h-12 text-blue-500 mx-auto mb-4" />
+                        <h3 className="text-xl font-bold text-white mb-2">
+                            {importProgress < 100 ? 'Uploading Backup...' : 'Processing Backup...'}
+                        </h3>
+                        <p className="text-gray-400 text-sm mb-6">
+                            {importProgress < 100
+                                ? `Please wait while we upload your file (${importProgress}%)`
+                                : 'The server is now restoring your data. This may take a moment.'}
+                        </p>
+
+                        <div className="w-full bg-white/5 rounded-full h-2 overflow-hidden">
+                            <div
+                                className="h-full bg-blue-500 transition-all duration-300 ease-out"
+                                style={{ width: `${importProgress}%` }}
+                            />
+                        </div>
+                    </div>
+                </div>
+            )}
             <div className="glass-panel p-8 rounded-3xl">
                 <h1 className="text-2xl font-black text-white tracking-tighter mb-2">Profile Settings</h1>
                 <p className="text-gray-400 text-sm mb-8">Update your public profile information.</p>

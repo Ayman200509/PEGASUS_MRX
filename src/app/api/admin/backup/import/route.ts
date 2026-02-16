@@ -52,8 +52,10 @@ export async function POST(req: Request) {
             // Try native unzip
             // -o: overwrite without prompting
             // -d: destination directory
-            // We unzip directly to process.cwd() because the zip structure contains 'public/uploads' and 'src/data.json'
-            await execAsync(`unzip -o "${tmpPath}" -d "${process.cwd()}"`);
+            // -q: quiet mode (suppress output) -> Important for speed with many files
+            console.time('native-unzip');
+            await execAsync(`unzip -o -q "${tmpPath}" -d "${process.cwd()}"`);
+            console.timeEnd('native-unzip');
 
             // Verify data.json exists after unzip
             const dataPath = path.join(process.cwd(), 'src/data.json');
