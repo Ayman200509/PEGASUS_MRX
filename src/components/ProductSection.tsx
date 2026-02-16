@@ -41,20 +41,20 @@ export function ProductSection() {
     );
 
     return (
-        <div className="w-full max-w-7xl mx-auto px-6 pb-32">
+        <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 pb-20 sm:pb-32">
 
             {/* Section Header */}
-            <div className="flex flex-col md:flex-row items-center justify-end mb-16 gap-8 border-b border-white/5 pb-8">
+            <div className="flex flex-col md:flex-row items-center justify-end mb-8 sm:mb-16 gap-4 sm:gap-8 border-b border-white/5 pb-6 sm:pb-8">
                 {/* Modern Search Bar */}
                 <div className="relative w-full md:w-96 group">
-                    <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none z-10">
+                    <div className="absolute inset-y-0 left-0 pl-4 sm:pl-5 flex items-center pointer-events-none z-10">
                         <Search className="h-4 w-4 text-gray-500 group-focus-within:text-red-500 transition-colors" />
                     </div>
                     <input
                         type="text"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="bg-[#0a0a0c] border border-white/10 text-gray-100 text-sm rounded-full focus:ring-2 focus:ring-red-500/20 focus:border-red-500 block w-full pl-12 pr-6 py-4 placeholder-gray-600 shadow-xl transition-all focus:bg-[#101015]"
+                        className="bg-[#0a0a0c] border border-white/10 text-gray-100 text-sm rounded-full focus:ring-2 focus:ring-red-500/20 focus:border-red-500 block w-full pl-10 sm:pl-12 pr-4 sm:pr-6 py-3 sm:py-4 placeholder-gray-600 shadow-xl transition-all focus:bg-[#101015]"
                         placeholder="Search for tools..."
                     />
                     {/* Glow effect under search */}
@@ -63,7 +63,7 @@ export function ProductSection() {
             </div>
 
             {/* Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
                 {loading ? (
                     <div className="col-span-full py-12 text-center text-gray-500 animate-pulse">Loading Products...</div>
                 ) : filteredProducts.length > 0 ? (
