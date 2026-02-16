@@ -79,11 +79,11 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
                             </div>
 
                             <div className="prose prose-invert max-w-none text-gray-400 mb-10">
-                                <p className="text-lg leading-relaxed">
+                                <div className="text-lg leading-relaxed whitespace-pre-wrap font-mono">
                                     {product.description || `Experience premium quality with the ${product.title}. Designed for excellence and reliability, 
                                 this ${product.type.toLowerCase()} delivers outstanding performance and value. 
                                 Instant delivery and 24/7 support included.`}
-                                </p>
+                                </div>
                                 <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 list-none pl-0">
                                     <li className="flex items-center gap-3 text-sm font-bold text-gray-300">
                                         <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-red-500"><Zap size={18} /></div>
