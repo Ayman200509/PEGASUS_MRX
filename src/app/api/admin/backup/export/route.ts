@@ -27,7 +27,7 @@ export async function GET() {
         const stream = new ReadableStream({
             start(controller) {
                 const archive = archiver('zip', {
-                    zlib: { level: 9 } // Sets the compression level.
+                    zlib: { level: 1 } // Level 1: Fastest compression
                 });
 
                 // Listen for errors
