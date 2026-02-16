@@ -24,77 +24,7 @@
         "productsCount": 3,
         "salesCount": 0
     },
-    "products": [
-        {
-            "id": "b4pwt0w",
-            "title": "RDP",
-            "price": "50",
-            "description": "wa titoz",
-            "oldPrice": "100",
-            "type": "Service",
-            "inStock": true,
-            "imageColor": "bg-gradient-to-br from-gray-800 to-black",
-            "image": "/uploads/693f7106-e99b-4e30-a4d0-9aa3d9342d14-rddp.png",
-            "images": [
-                "/uploads/7223c8ba-69c3-453f-8aea-9fd8949cd70f-XAUUSD_2026-02-04_16-52-11.png"
-            ],
-            "videos": [
-                "/uploads/8854d384-180b-440c-a777-759d0d2734c8-IMG_3601.MOV"
-            ],
-            "content": "",
-            "customFields": [
-                {
-                    "label": "Twitter Id",
-                    "required": true,
-                    "type": "text"
-                }
-            ]
-        },
-        {
-            "id": "xb952iu",
-            "title": "rrda",
-            "price": "25",
-            "description": "",
-            "oldPrice": "400",
-            "type": "Service",
-            "inStock": true,
-            "imageColor": "bg-gradient-to-br from-gray-800 to-black",
-            "image": "",
-            "images": [],
-            "videos": [],
-            "content": "",
-            "customFields": [
-                {
-                    "label": "Telegram id",
-                    "required": true,
-                    "type": "text"
-                }
-            ]
-        },
-        {
-            "id": "drxukxw",
-            "title": "chi 9alwa w sf",
-            "price": "22",
-            "description": "",
-            "oldPrice": "2222",
-            "type": "Service",
-            "inStock": true,
-            "imageColor": "bg-gradient-to-br from-gray-800 to-black",
-            "image": "/uploads/c3c73d74-ecaf-41d5-aa11-ae32c582eece-rddp.png",
-            "images": [],
-            "videos": [
-                "/uploads/09e39cd8-6271-4a4e-b83f-5494a8b93789-IMG_3601.MOV"
-            ],
-            "content": "",
-            "customFields": [
-                {
-                    "label": "Telegram id",
-                    "required": true,
-                    "type": "text"
-                }
-            ]
-        }
-    ],
+    "products": [],
     "categories": [],
     "orders": [],
     "tickets": [],
