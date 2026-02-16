@@ -148,40 +148,11 @@ export async function getData(): Promise<Data> {
     }
 }
 
+// @ts-ignore
+import defaultData from './data.default.json';
+
 function getDefaultData(): Data {
-    return {
-        profile: {
-            name: "PEGASUS_MRX",
-            handle: "@PEGASUS_MRX",
-            type: "DIGITAL STORE",
-            tagline: "Digital Store",
-            avatar: "",
-            socials: {
-                telegram: "@PEGASUS_MRX",
-                twitter: "",
-                instagram: "",
-                discord: "",
-                youtube: "",
-                website: ""
-            },
-            payout: {
-                network: "USDT (TRC-20)",
-                address: ""
-            },
-            telegramWidget: {
-                enabled: true,
-                username: "PEGASUS_MRX"
-            },
-            productsCount: 0,
-            salesCount: 0
-        },
-        products: [],
-        categories: [],
-        orders: [],
-        tickets: [],
-        visits: [],
-        reviews: []
-    };
+    return defaultData as Data;
 }
 
 export async function saveData(data: Data): Promise<void> {
