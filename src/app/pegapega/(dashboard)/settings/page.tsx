@@ -319,34 +319,33 @@ export default function SettingsPage() {
                         </div>
                     </div>
 
-            </div>
-        </div>
 
-                    {/* Configuration Management */ }
-    <div className="pt-6 border-t border-white/5">
-        <h3 className="text-blue-500 font-bold mb-4 flex items-center gap-2">
-            <Save size={18} />
-            Backup Configuration
-        </h3>
-        <div className="bg-blue-500/10 border border-blue-500/20 rounded-2xl p-6 mb-6">
-            <h4 className="text-white font-bold mb-2">Save Current State as Default</h4>
-            <p className="text-gray-400 text-sm mb-4">
-                Save your current <strong>Products, Categories, and Settings</strong> as the new "Restore Point".
-                <br />
-                Useful after you finish setting up your store. Orders and Visits are NOT included.
-            </p>
-            <button
-                type="button"
-                onClick={handleSaveDefault}
-                disabled={saving}
-                className="bg-blue-500/20 hover:bg-blue-500 text-blue-500 hover:text-white border border-blue-500/50 font-bold py-3 px-6 rounded-xl transition-all flex items-center gap-2 text-sm"
-            >
-                <Save size={16} />
-                Save Configuration as Restore Point
-            </button>
-        </div>
-    </div>
-    {/* Danger Zone */ }
+
+                    {/* Configuration Management */}
+                    <div className="pt-6 border-t border-white/5">
+                        <h3 className="text-blue-500 font-bold mb-4 flex items-center gap-2">
+                            <Save size={18} />
+                            Backup Configuration
+                        </h3>
+                        <div className="bg-blue-500/10 border border-blue-500/20 rounded-2xl p-6 mb-6">
+                            <h4 className="text-white font-bold mb-2">Save Current State as Default</h4>
+                            <p className="text-gray-400 text-sm mb-4">
+                                Save your current <strong>Products, Categories, and Settings</strong> as the new "Restore Point".
+                                <br />
+                                Useful after you finish setting up your store. Orders and Visits are NOT included.
+                            </p>
+                            <button
+                                type="button"
+                                onClick={handleSaveDefault}
+                                disabled={saving}
+                                className="bg-blue-500/20 hover:bg-blue-500 text-blue-500 hover:text-white border border-blue-500/50 font-bold py-3 px-6 rounded-xl transition-all flex items-center gap-2 text-sm"
+                            >
+                                <Save size={16} />
+                                Save Configuration as Restore Point
+                            </button>
+                        </div>
+                    </div>
+                    {/* Danger Zone */}
                     <div className="pt-6 border-t border-white/5">
                         <h3 className="text-red-500 font-bold mb-4 flex items-center gap-2">
                             <AlertTriangle size={18} />
@@ -372,14 +371,14 @@ export default function SettingsPage() {
                         </div>
                     </div>
 
-        <div className="pt-4 border-t border-white/5">
-            <button
-                disabled={saving || uploading}
-                className="w-full bg-red-600 hover:bg-red-500 disabled:opacity-50 text-white font-bold py-3.5 rounded-xl shadow-[0_0_20px_rgba(220,38,38,0.3)] transition-all flex items-center justify-center gap-2"
-            >
-                {saving ? <Loader2 className="animate-spin" /> : <><Save size={18} /> Save Changes</>}
-            </button>
-        </div>
+                    <div className="pt-4 border-t border-white/5">
+                        <button
+                            disabled={saving || uploading}
+                            className="w-full bg-red-600 hover:bg-red-500 disabled:opacity-50 text-white font-bold py-3.5 rounded-xl shadow-[0_0_20px_rgba(220,38,38,0.3)] transition-all flex items-center justify-center gap-2"
+                        >
+                            {saving ? <Loader2 className="animate-spin" /> : <><Save size={18} /> Save Changes</>}
+                        </button>
+                    </div>
                 </form >
             </div >
         </div >
