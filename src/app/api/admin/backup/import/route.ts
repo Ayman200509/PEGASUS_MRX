@@ -1,9 +1,8 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import AdmZip from 'adm-zip';
+import unzipper from 'unzipper';
 import path from 'path';
 import fs from 'fs';
-import { resetData } from '@/lib/db';
 
 export const dynamic = 'force-dynamic';
 
@@ -27,30 +26,27 @@ export async function POST(req: Request) {
         const arrayBuffer = await file.arrayBuffer();
         const buffer = Buffer.from(arrayBuffer);
 
-        const zip = new AdmZip(buffer);
-        const zipEntries = zip.getEntries();
+        // Open zip from buffer
+        const directory = await unzipper.Open.buffer(buffer);
 
-        // Verify structure roughly
-        const hasData = zipEntries.some(entry => entry.entryName.includes('src/data.json') || entry.entryName.includes('data.json'));
+        // Verify structure
+        const hasData = directory.files.some(file => file.path.includes('src/data.json') || file.path.includes('data.json'));
 
         if (!hasData) {
             return NextResponse.json({ error: 'Invalid backup: missing data.json' }, { status: 400 });
         }
 
         // 1. Restore Data
-        // Extract data.json directly to src/data.json
-        // We find the data entry
-        const dataEntry = zipEntries.find(entry => entry.entryName.endsWith('data.json'));
+        const dataEntry = directory.files.find(file => file.path.endsWith('data.json'));
         if (dataEntry) {
-            const dataContent = zip.readAsText(dataEntry);
+            const dataContent = await dataEntry.buffer();
             const dataPath = path.join(process.cwd(), 'src/data.json');
-            fs.writeFileSync(dataPath, dataContent, 'utf-8');
+            fs.writeFileSync(dataPath, dataContent);
 
-            // Also update the base restore point so "Reset" works correctly after import
+            // Also update the base restore point
             const baseDataPath = path.join(process.cwd(), 'src/data.base.json');
-            // We strip orders/visits for the base restore point
             try {
-                const data = JSON.parse(dataContent);
+                const data = JSON.parse(dataContent.toString('utf-8'));
                 data.orders = [];
                 data.visits = [];
                 data.reviews = [];
@@ -63,20 +59,21 @@ export async function POST(req: Request) {
 
         // 2. Restore Media
         const publicUploads = path.join(process.cwd(), 'public/uploads');
-        // Ensure directory exists
         if (!fs.existsSync(publicUploads)) {
             fs.mkdirSync(publicUploads, { recursive: true });
         }
 
-        // Extract files that are in public/uploads folder in zip
-        zipEntries.forEach(entry => {
-            if (entry.entryName.startsWith('public/uploads/') && !entry.isDirectory) {
-                const fileName = path.basename(entry.entryName);
-                if (fileName) {
-                    zip.extractEntryTo(entry, publicUploads, false, true);
-                }
+        // Extract files in public/uploads in parallel
+        const mediaFiles = directory.files.filter(file => file.path.startsWith('public/uploads/') && file.type === 'File');
+
+        await Promise.all(mediaFiles.map(async (file) => {
+            const fileName = path.basename(file.path);
+            if (fileName) {
+                const content = await file.buffer();
+                const filePath = path.join(publicUploads, fileName);
+                fs.writeFileSync(filePath, content);
             }
-        });
+        }));
 
         return NextResponse.json({ success: true });
     } catch (error) {
