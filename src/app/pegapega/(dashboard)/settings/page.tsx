@@ -104,23 +104,34 @@ export default function SettingsPage() {
 
         if (!confirm("⚠️ OVERWRITE WARNING ⚠️\n\nThis will overwrite your current site data with the backup.\n\nMake sure this is the correct backup file.")) return;
 
-        const formData = new FormData();
-        formData.append('file', file);
-
         setSaving(true);
         try {
-            const res = await fetch('/api/admin/backup/import', { method: 'POST', body: formData });
+            // Use raw binary upload instead of FormData to avoid memory issues with large files
+            const res = await fetch('/api/admin/backup/import', {
+                method: 'POST',
+                body: file,
+                headers: {
+                    'Content-Type': 'application/octet-stream',
+                    'x-filename': file.name
+                },
+                // @ts-ignore - duplay prop for progress tracking if needed in future
+                duplex: 'half'
+            });
+
             if (res.ok) {
                 alert("Backup restored successfully! The page will reload.");
                 window.location.reload();
             } else {
-                alert("Failed to restore backup.");
+                const error = await res.json();
+                alert(`Failed to restore backup: ${error.error || 'Unknown error'}`);
             }
         } catch (error) {
             console.error(error);
             alert("Error restoring backup.");
         } finally {
             setSaving(false);
+            // Reset input
+            e.target.value = '';
         }
     };
 

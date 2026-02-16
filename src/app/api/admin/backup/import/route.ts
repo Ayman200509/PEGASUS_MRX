@@ -19,23 +19,35 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
-        const formData = await req.formData();
-        const file = formData.get('file') as File;
+        // Stream-to-Disk Approach
+        // Instead of buffering in memory with arrayBuffer(), we pipe the request body directly to disk.
+        // This allows infinite file size (constrained only by disk space).
 
-        if (!file) {
+        const tmpPath = path.join(process.cwd(), 'temp_restore.zip');
+
+        if (!req.body) {
             return NextResponse.json({ error: 'No file uploaded' }, { status: 400 });
         }
 
-        // Convert File to Buffer
-        const arrayBuffer = await file.arrayBuffer();
-        const buffer = Buffer.from(arrayBuffer);
+        // Convert Web Stream to Node Stream and pipe to file
+        // @ts-ignore
+        const { Readable } = await import('stream');
+        // @ts-ignore
+        const nodeStream = Readable.fromWeb(req.body);
+        const fileStream = fs.createWriteStream(tmpPath);
+
+        await new Promise((resolve, reject) => {
+            nodeStream.pipe(fileStream);
+            nodeStream.on('error', reject);
+            fileStream.on('finish', () => resolve(null));
+            fileStream.on('error', reject);
+        });
 
         // Hybrid Approach: Try native unzip first (faster for large files), fallback to node-unzipper
-        const tmpPath = path.join(process.cwd(), 'temp_restore.zip');
+        // tmpPath is already defined above
 
         try {
-            // Write temp file for native unzip
-            fs.writeFileSync(tmpPath, buffer);
+            // File is already at tmpPath, no need to write buffer
 
             // Try native unzip
             // -o: overwrite without prompting
@@ -67,7 +79,7 @@ export async function POST(req: Request) {
             console.warn("Native unzip failed, falling back to node-unzipper:", nativeError);
 
             // Fallback: Node-based Unzip (Slower but reliable)
-            const directory = await unzipper.Open.buffer(buffer);
+            const directory = await unzipper.Open.file(tmpPath);
 
             // Verify structure
             const hasData = directory.files.some(file => file.path.includes('src/data.json') || file.path.includes('data.json'));
