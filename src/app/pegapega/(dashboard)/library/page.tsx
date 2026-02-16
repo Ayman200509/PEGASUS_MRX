@@ -40,23 +40,45 @@ export default function MediaLibraryPage() {
         if (!e.target.files || e.target.files.length === 0) return;
 
         setUploading(true);
-        const file = e.target.files[0];
-        const formData = new FormData();
-        formData.append("file", file);
+        const files = Array.from(e.target.files);
+        let successCount = 0;
+        let failCount = 0;
 
         try {
-            const res = await fetch("/api/upload", {
-                method: "POST",
-                body: formData,
-            });
+            // Upload each file sequentially
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const formData = new FormData();
+                formData.append("file", file);
 
-            if (!res.ok) throw new Error("Upload failed");
+                try {
+                    const res = await fetch("/api/upload", {
+                        method: "POST",
+                        body: formData,
+                    });
+
+                    if (res.ok) {
+                        successCount++;
+                    } else {
+                        failCount++;
+                        console.error(`Failed to upload ${file.name}`);
+                    }
+                } catch (error) {
+                    failCount++;
+                    console.error(`Error uploading ${file.name}:`, error);
+                }
+            }
+
+            // Show result summary
+            if (failCount > 0) {
+                alert(`Uploaded ${successCount} file(s). ${failCount} file(s) failed.`);
+            }
 
             // Refresh list
             await fetchFiles();
         } catch (error) {
             console.error(error);
-            alert("Failed to upload file");
+            alert("Failed to upload files");
         } finally {
             setUploading(false);
             // Reset input
@@ -111,6 +133,7 @@ export default function MediaLibraryPage() {
                         onChange={handleUpload}
                         disabled={uploading}
                         accept="image/*,video/*"
+                        multiple
                     />
                 </label>
             </div>
