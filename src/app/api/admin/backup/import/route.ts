@@ -9,6 +9,7 @@ import { promisify } from 'util';
 const execAsync = promisify(exec);
 
 export const dynamic = 'force-dynamic';
+export const maxDuration = 600; // 10 minutes
 
 export async function POST(req: Request) {
     try {
@@ -26,9 +27,11 @@ export async function POST(req: Request) {
         const tmpPath = path.join(process.cwd(), 'temp_restore.zip');
 
         if (!req.body) {
+            console.error("Backup Import: No request body found");
             return NextResponse.json({ error: 'No file uploaded' }, { status: 400 });
         }
 
+        console.log("Backup Import: Starting stream to disk...");
         // Convert Web Stream to Node Stream and pipe to file
         // @ts-ignore
         const { Readable } = await import('stream');
@@ -36,11 +39,28 @@ export async function POST(req: Request) {
         const nodeStream = Readable.fromWeb(req.body);
         const fileStream = fs.createWriteStream(tmpPath);
 
+        let bytesReceived = 0;
+        nodeStream.on('data', (chunk: any) => {
+            bytesReceived += chunk.length;
+            if (bytesReceived % (1024 * 1024) === 0) { // Log every 1MB
+                console.log(`Backup Import: Received ${Math.round(bytesReceived / 1024 / 1024)}MB`);
+            }
+        });
+
         await new Promise((resolve, reject) => {
             nodeStream.pipe(fileStream);
-            nodeStream.on('error', reject);
-            fileStream.on('finish', () => resolve(null));
-            fileStream.on('error', reject);
+            nodeStream.on('error', (err: any) => {
+                console.error("Backup Import: Stream Error:", err);
+                reject(err);
+            });
+            fileStream.on('finish', () => {
+                console.log(`Backup Import: Finished writing to disk. Total size: ${Math.round(bytesReceived / 1024 / 1024)}MB`);
+                resolve(null)
+            });
+            fileStream.on('error', (err: any) => {
+                console.error("Backup Import: File Stream Error:", err);
+                reject(err);
+            });
         });
 
         // Hybrid Approach: Try native unzip first (faster for large files), fallback to node-unzipper

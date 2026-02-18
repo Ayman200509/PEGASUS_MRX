@@ -134,7 +134,7 @@ export default function SettingsPage() {
                     if (xhr.status >= 200 && xhr.status < 300) {
                         resolve(xhr.response);
                     } else {
-                        let errorMessage = 'Unknown error';
+                        let errorMessage = `Server error (${xhr.status})`;
                         try {
                             const error = JSON.parse(xhr.responseText);
                             errorMessage = error.error || errorMessage;
@@ -143,7 +143,7 @@ export default function SettingsPage() {
                     }
                 };
 
-                xhr.onerror = () => reject(new Error('Network error'));
+                xhr.onerror = () => reject(new Error('Network error or Request Blocked. Check your internet or Adblock.'));
 
                 // Send raw file
                 xhr.setRequestHeader('Content-Type', 'application/octet-stream');

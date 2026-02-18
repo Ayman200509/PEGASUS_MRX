@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { resetData } from '@/lib/db';
 import fs from 'fs/promises';
+import * as fsSync from 'fs';
 import path from 'path';
 
 export async function POST() {
@@ -19,15 +20,20 @@ export async function POST() {
         // 2. Clear Media Library
         try {
             const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
-            // Ensure directory exists
-            await fs.mkdir(uploadsDir, { recursive: true });
+            console.log(`[Admin Reset] Attempting to clear uploads directory: ${uploadsDir}`);
 
-            const files = await fs.readdir(uploadsDir);
-            for (const file of files) {
-                // Skip .gitkeep or system files if necessary, currently deleting all
-                await fs.unlink(path.join(uploadsDir, file));
+            // Delete entire directory and re-create it for a clean slate
+            if (fsSync.existsSync(uploadsDir)) {
+                const filesBefore = await fs.readdir(uploadsDir);
+                // Using recursive delete to handle subdirectories if any
+                await fs.rm(uploadsDir, { recursive: true, force: true });
+                console.log(`[Admin Reset] Deleted uploads directory containing ${filesBefore.length} items.`);
             }
-            console.log(`[Admin Reset] Cleared ${files.length} files from uploads.`);
+
+            // Re-create the empty directory
+            await fs.mkdir(uploadsDir, { recursive: true });
+            console.log(`[Admin Reset] Re-created empty uploads directory.`);
+
         } catch (mediaError) {
             console.error('[Admin Reset] Failed to clear media library:', mediaError);
             // Continue even if media clear fails, to at least reset DB

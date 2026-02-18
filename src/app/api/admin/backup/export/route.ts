@@ -65,10 +65,13 @@ export async function GET() {
                     }
                 }
 
-                // 2. Add Media Files
+                // 2. Add Media Files (excluding videos)
                 const uploadsPath = path.join(process.cwd(), 'public/uploads');
                 if (fs.existsSync(uploadsPath)) {
-                    archive.directory(uploadsPath, 'public/uploads');
+                    archive.glob('**/*', {
+                        cwd: uploadsPath,
+                        ignore: ['*.mp4', '*.mov', '*.avi', '*.webm', '*.MOV', '*.MP4', '*.WEBM']
+                    }, { prefix: 'public/uploads' });
                 }
 
                 archive.finalize();
