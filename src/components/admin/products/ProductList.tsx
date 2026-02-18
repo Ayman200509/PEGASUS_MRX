@@ -148,19 +148,12 @@ export function ProductList({ products, loading, onEdit, onDelete, onCreate }: P
     };
 
     const updatePositions = async (updates: { id: string, position: number }[]) => {
-        // We can send these one by one or create a bulk endpoint. 
-        // Given the requirement, I'll loop them for now as it's easiest without touching backend route too much,
-        // unless I want to add a PATCH bulk.
-        // Actually, let's just loop. It's fine for small lists.
-
         try {
-            await Promise.all(updates.map(u =>
-                fetch('/api/products', {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(u)
-                })
-            ));
+            await fetch('/api/products', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(updates)
+            });
         } catch (error) {
             console.error("Failed to save positions", error);
         }

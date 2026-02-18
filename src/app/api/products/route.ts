@@ -86,6 +86,25 @@ export async function PUT(request: Request) {
         const body = await request.json();
         const data = await getData();
 
+        // Handle bulk update (array of product updates)
+        if (Array.isArray(body)) {
+            const updates = body;
+            let updatedCount = 0;
+
+            updates.forEach(update => {
+                if (update.id === undefined) return;
+                const index = (data.products || []).findIndex((p: any) => p.id === update.id);
+                if (index !== -1) {
+                    data.products[index] = { ...data.products[index], ...update };
+                    updatedCount++;
+                }
+            });
+
+            await saveData(data);
+            return NextResponse.json({ success: true, updatedCount });
+        }
+
+        // Handle single product update (existing logic)
         const index = (data.products || []).findIndex(p => p.id === body.id);
         if (index === -1) return NextResponse.json({ error: "Product not found" }, { status: 404 });
 
