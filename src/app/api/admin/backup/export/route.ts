@@ -1,5 +1,5 @@
-import { NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
+import { NextResponse, NextRequest } from 'next/server';
+import { cookies, headers } from 'next/headers';
 import archiver from 'archiver';
 import path from 'path';
 import fs from 'fs';
@@ -8,9 +8,13 @@ import fs from 'fs';
 export const dynamic = 'force-dynamic';
 export const maxDuration = 300; // 5 minutes
 
-export async function GET() {
+export async function GET(request: NextRequest) {
     try {
         const cookieStore = await cookies();
+        const headerStore = await headers();
+        const host = headerStore.get('host') || 'pegasus1337.store';
+        const protocol = host.includes('localhost') ? 'http' : 'https';
+        const baseUrl = `${protocol}://${host}`;
         const session = cookieStore.get('admin_session');
 
         if (!session || session.value !== 'true') {
@@ -55,13 +59,39 @@ export async function GET() {
 
                 // 1. Add Data Files
                 const dataPath = path.join(process.cwd(), 'src/data.json');
-                if (fs.existsSync(dataPath)) {
-                    archive.file(dataPath, { name: 'src/data.json' });
-                } else {
-                    // If main data missing, try default
-                    const defaultPath = path.join(process.cwd(), 'src/lib/data.default.json');
-                    if (fs.existsSync(defaultPath)) {
-                        archive.file(defaultPath, { name: 'src/data.json' });
+                let dataJsonPath = dataPath;
+                if (!fs.existsSync(dataPath)) {
+                    dataJsonPath = path.join(process.cwd(), 'src/lib/data.default.json');
+                }
+
+                if (fs.existsSync(dataJsonPath)) {
+                    archive.file(dataJsonPath, { name: 'src/data.json' });
+
+                    // 1.1 Add Video URLs as a text file
+                    try {
+                        const dataContent = fs.readFileSync(dataJsonPath, 'utf-8');
+                        const data = JSON.parse(dataContent);
+                        const videoPaths: string[] = [];
+
+                        if (Array.isArray(data.products)) {
+                            data.products.forEach((p: any) => {
+                                if (Array.isArray(p.videos)) {
+                                    p.videos.forEach((v: string) => {
+                                        if (v) videoPaths.push(v);
+                                    });
+                                }
+                            });
+                        }
+
+                        const uniqueVideos = Array.from(new Set(videoPaths));
+                        if (uniqueVideos.length > 0) {
+                            const videoLinksText = uniqueVideos
+                                .map(v => v.startsWith('http') ? v : `${baseUrl}${v}`)
+                                .join('\n');
+                            archive.append(videoLinksText, { name: 'video_links.txt' });
+                        }
+                    } catch (e) {
+                        console.error("Failed to extract video links:", e);
                     }
                 }
 
