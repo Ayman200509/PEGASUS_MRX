@@ -119,7 +119,7 @@ export function MediaPicker({ onSelect, type = "both", trigger }: MediaPickerPro
                                             {file.type === 'image' ? (
                                                 <img src={file.url} alt={file.name} className="w-full h-full object-cover" />
                                             ) : (
-                                                <video src={file.url} className="w-full h-full object-cover" />
+                                                <video src={file.url} className="w-full h-full object-cover" muted playsInline preload="metadata" />
                                             )}
 
                                             {/* Hover Overlay */}

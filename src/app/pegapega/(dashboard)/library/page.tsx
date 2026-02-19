@@ -198,6 +198,8 @@ export default function MediaLibraryPage() {
                                         className="w-full h-full object-cover"
                                         muted
                                         loop
+                                        playsInline
+                                        preload="metadata"
                                         onMouseOver={(e) => e.currentTarget.play()}
                                         onMouseOut={(e) => e.currentTarget.pause()}
                                     />

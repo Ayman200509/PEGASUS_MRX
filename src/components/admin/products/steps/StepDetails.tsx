@@ -182,7 +182,7 @@ export function StepDetails({
                         {videos.map((vid, idx) => (
                             <div key={idx} className="flex gap-2 items-center bg-[#121215] p-2 rounded-xl border border-white/10">
                                 <div className="flex-1 overflow-hidden">
-                                    <video src={vid} className="h-12 w-auto rounded object-cover" controls playsInline />
+                                    <video src={vid} className="h-12 w-auto rounded object-cover" controls playsInline muted preload="metadata" />
                                 </div>
                                 <input
                                     value={vid}

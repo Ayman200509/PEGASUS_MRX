@@ -65,7 +65,10 @@ export function ProductMedia({ mainImage, title, imageColor, images = [], videos
                             className="w-full h-full object-contain"
                             controls
                             autoPlay
+                            muted
+                            playsInline
                             loop
+                            preload="metadata"
                             controlsList="nodownload noplaybackrate"
                             disablePictureInPicture
                             onContextMenu={(e) => e.preventDefault()}
@@ -123,7 +126,7 @@ export function ProductMedia({ mainImage, title, imageColor, images = [], videos
                             <div className="w-10 h-10 rounded-full bg-red-600/20 text-red-500 flex items-center justify-center shadow-xl z-10">
                                 <Play size={20} fill="currentColor" />
                             </div>
-                            <video src={vid} className="absolute inset-0 w-full h-full object-cover opacity-50" />
+                            <video src={vid} className="absolute inset-0 w-full h-full object-cover opacity-50" playsInline muted preload="metadata" />
                             <p className="absolute bottom-2 text-[8px] font-bold text-gray-500 uppercase tracking-widest z-10">Video</p>
                         </div>
                     ))}
