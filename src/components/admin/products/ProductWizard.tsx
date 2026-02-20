@@ -27,6 +27,9 @@ export function ProductWizard({ initialData, onCancel, onSuccess }: ProductWizar
     const [images, setImages] = useState<string[]>([]);
     const [videos, setVideos] = useState<string[]>([]);
     const [position, setPosition] = useState(0);
+    const [ctaLabel, setCtaLabel] = useState("");
+    const [ctaUrl, setCtaUrl] = useState("");
+    const [ctaVisible, setCtaVisible] = useState(false);
 
     // Content State
     const [customFields, setCustomFields] = useState<any[]>([]);
@@ -47,6 +50,9 @@ export function ProductWizard({ initialData, onCancel, onSuccess }: ProductWizar
             setContent(initialData.content || "");
             setCustomFields(initialData.customFields || []);
             setPosition(initialData.position || 0);
+            setCtaLabel(initialData.ctaButton?.label || "");
+            setCtaUrl(initialData.ctaButton?.url || "");
+            setCtaVisible(initialData.ctaButton?.visible || false);
         }
     }, [initialData]);
 
@@ -54,7 +60,8 @@ export function ProductWizard({ initialData, onCancel, onSuccess }: ProductWizar
         setIsSubmitting(true);
         const productData = {
             title, price, oldPrice, type, image, images, videos, inStock, description,
-            content, customFields, position
+            content, customFields, position,
+            ctaButton: { label: ctaLabel, url: ctaUrl, visible: ctaVisible },
         };
 
         try {
@@ -120,6 +127,9 @@ export function ProductWizard({ initialData, onCancel, onSuccess }: ProductWizar
                         image={image} setImage={setImage}
                         images={images} setImages={setImages}
                         videos={videos} setVideos={setVideos}
+                        ctaLabel={ctaLabel} setCtaLabel={setCtaLabel}
+                        ctaUrl={ctaUrl} setCtaUrl={setCtaUrl}
+                        ctaVisible={ctaVisible} setCtaVisible={setCtaVisible}
                     />
                 )}
                 {step === 3 && (

@@ -21,6 +21,12 @@ interface StepDetailsProps {
     setImages: (v: string[]) => void;
     videos: string[];
     setVideos: (v: string[]) => void;
+    ctaLabel: string;
+    setCtaLabel: (v: string) => void;
+    ctaUrl: string;
+    setCtaUrl: (v: string) => void;
+    ctaVisible: boolean;
+    setCtaVisible: (v: boolean) => void;
 }
 
 export function StepDetails({
@@ -32,7 +38,10 @@ export function StepDetails({
     inStock, setInStock,
     image, setImage,
     images, setImages,
-    videos, setVideos
+    videos, setVideos,
+    ctaLabel, setCtaLabel,
+    ctaUrl, setCtaUrl,
+    ctaVisible, setCtaVisible,
 }: StepDetailsProps) {
     const [isUploading, setIsUploading] = useState(false);
 
@@ -312,6 +321,49 @@ export function StepDetails({
                         <label className="text-sm font-bold text-white block">Available for Purchase</label>
                         <p className="text-xs text-gray-500">Uncheck to hide this product from the store.</p>
                     </div>
+                </div>
+
+                {/* CTA Button */}
+                <div className="p-4 bg-[#0a0a0c] rounded-xl border border-white/5 space-y-3">
+                    <div className="flex items-center justify-between">
+                        <div>
+                            <label className="text-sm font-bold text-white block">CTA Button</label>
+                            <p className="text-xs text-gray-500">A green action button shown between price and description.</p>
+                        </div>
+                        <button
+                            type="button"
+                            onClick={() => setCtaVisible(!ctaVisible)}
+                            className={`relative w-12 h-6 rounded-full transition-colors ${ctaVisible ? 'bg-green-500' : 'bg-white/10'}`}
+                        >
+                            <span className={`absolute top-1 left-1 w-4 h-4 rounded-full bg-white transition-transform ${ctaVisible ? 'translate-x-6' : 'translate-x-0'}`} />
+                        </button>
+                    </div>
+                    <div>
+                        <label className="text-xs font-bold text-gray-500 uppercase tracking-widest pl-1 mb-1 block">Button Label</label>
+                        <input
+                            value={ctaLabel}
+                            onChange={(e) => setCtaLabel(e.target.value)}
+                            className="w-full bg-[#121215] border border-white/10 rounded-xl py-2 px-4 text-white focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all placeholder-gray-700 text-sm"
+                            placeholder="e.g. Join Channel, View Demo..."
+                        />
+                    </div>
+                    <div>
+                        <label className="text-xs font-bold text-gray-500 uppercase tracking-widest pl-1 mb-1 block">Button URL</label>
+                        <input
+                            value={ctaUrl}
+                            onChange={(e) => setCtaUrl(e.target.value)}
+                            className="w-full bg-[#121215] border border-white/10 rounded-xl py-2 px-4 text-white focus:outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all placeholder-gray-700 text-sm"
+                            placeholder="https://t.me/yourchannel"
+                        />
+                    </div>
+                    {ctaVisible && ctaLabel && ctaUrl && (
+                        <div className="pt-1">
+                            <p className="text-xs text-gray-500 mb-2 pl-1">Preview:</p>
+                            <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-green-500 text-black font-bold text-sm">
+                                {ctaLabel}
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

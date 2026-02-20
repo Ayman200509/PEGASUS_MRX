@@ -78,6 +78,18 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
                                 </div>
                             </div>
 
+                            {/* CTA Button (between price and description) */}
+                            {product.ctaButton?.visible && product.ctaButton?.url && (
+                                <a
+                                    href={product.ctaButton.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-green-500 hover:bg-green-400 active:scale-95 text-black font-black text-sm tracking-wide shadow-[0_0_24px_rgba(34,197,94,0.35)] transition-all"
+                                >
+                                    {product.ctaButton.label || "Learn More"}
+                                </a>
+                            )}
+
                             <div className="prose prose-invert max-w-none text-gray-400 mb-10">
                                 <div className="text-lg leading-relaxed whitespace-pre-wrap font-mono">
                                     {product.description || `Experience premium quality with the ${product.title}. Designed for excellence and reliability, 

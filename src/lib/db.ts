@@ -20,6 +20,11 @@ export interface Product {
     content?: string;
     customFields?: { label: string; required: boolean; type: string }[];
     position?: number;
+    ctaButton?: {
+        label: string;
+        url: string;
+        visible: boolean;
+    };
 }
 
 export interface Profile {
