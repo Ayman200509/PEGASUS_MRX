@@ -38,7 +38,7 @@ export function ProductCard({ title, price, inStock = true, type = "Service", im
 
     return (
         <div className="group relative glass-card rounded-[24px] p-4 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_10px_40px_-10px_rgba(239,68,68,0.15)] flex flex-col h-full w-full overflow-hidden">
-            <Link href={`/product/${productObj.id}`} className="absolute inset-0 z-10" />
+            <Link href={`/product/${productObj.title.toLowerCase().trim().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-')}`} className="absolute inset-0 z-10" />
 
             {/* Decorative Gradient Border on Hover */}
             <div className="absolute inset-0 rounded-[24px] border border-red-500/0 group-hover:border-red-500/30 transition-colors duration-500 pointer-events-none z-20" />

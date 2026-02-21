@@ -2,10 +2,15 @@ import { NextResponse } from 'next/server';
 import { getData, saveData } from '@/lib/db';
 
 
-// Helper for ID generation since we don't have nanoid installed yet, 
-// using a simple random string for now or better to install it.
-// I'll keep it simple without external deps for this step to ensure speed.
-const generateId = () => Math.random().toString(36).substring(2, 9);
+// Generates a URL-safe slug from a product title
+// e.g. "VIP Channel!" → "vip-channel"
+const slugify = (title: string) =>
+    title
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9\s-]/g, '')   // remove special chars
+        .replace(/\s+/g, '-')            // spaces → dashes
+        .replace(/-+/g, '-');            // collapse multiple dashes
 
 export async function GET() {
     try {
@@ -27,8 +32,17 @@ export async function POST(request: Request) {
         const body = await request.json();
         const data = await getData();
 
+        // Build a slug from title, ensure uniqueness
+        const baseSlug = slugify(body.title) || Math.random().toString(36).substring(2, 9);
+        const existingIds = new Set((data.products || []).map((p: any) => p.id));
+        let slug = baseSlug;
+        let counter = 2;
+        while (existingIds.has(slug)) {
+            slug = `${baseSlug}-${counter++}`;
+        }
+
         const newProduct = {
-            id: generateId(),
+            id: slug,
             title: body.title,
             price: body.price,
             description: body.description || "",
@@ -41,7 +55,8 @@ export async function POST(request: Request) {
             videos: body.videos || [],
             content: body.content || "",
             customFields: body.customFields || [],
-            position: body.position || 0
+            position: body.position || 0,
+            ctaButton: body.ctaButton || { label: "", url: "", visible: false },
         };
 
         if (!data.products) data.products = [];
