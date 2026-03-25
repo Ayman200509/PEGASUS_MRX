@@ -1,8 +1,14 @@
 import { NextResponse } from 'next/server';
 import { getData, saveData, Visit } from '@/lib/db';
+import { withBotDetection } from '@/lib/botDetection';
 
-export async function POST(request: Request) {
+export const POST = withBotDetection(async (request: Request & { isBot?: boolean }) => {
     try {
+        if (request.isBot) {
+            // Returning successful 200 response so frontend/browser don't show errors
+            return NextResponse.json({ success: true, bot: true });
+        }
+
         const body = await request.json();
         const { path } = body;
 
@@ -37,4 +43,4 @@ export async function POST(request: Request) {
         console.error("Analytics Error:", error);
         return NextResponse.json({ error: "Failed to track visit" }, { status: 500 });
     }
-}
+});
